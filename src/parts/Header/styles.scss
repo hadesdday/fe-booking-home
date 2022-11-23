@@ -1,0 +1,46 @@
+@import "../../settings";
+
+.btn {
+  &__signin {
+    border: none;
+    margin-right: 5px;
+    color: $main-color;
+  }
+
+  &__create__account {
+    border: 1px solid $main-color;
+    &:hover {
+      color: #fff;
+      background-color: $main-color;
+    }
+  }
+
+  &__create__account,
+  &__signin {
+    padding: 10px;
+    transition: all ease-in-out 0.25s;
+    border-radius: 5px;
+
+    &:hover {
+      background-color: $main-color;
+      color: #fff !important;
+    }
+  }
+
+  &__cart {
+    margin-right: 2em;
+    margin-top: 5px;
+  }
+}
+
+.nav-link {
+  transition: all ease-in-out 0.25s;
+  &:hover {
+    color: $main-color !important;
+  }
+}
+
+.ico__cart {
+  font-size: 190%;
+  color: #000;
+}
