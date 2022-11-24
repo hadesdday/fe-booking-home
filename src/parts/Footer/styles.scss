@@ -1,0 +1,56 @@
+@import "../../settings.scss";
+
+.help {
+  &__title,
+  &__item {
+    font-weight: 500;
+    font-size: 120%;
+    width: 70%;
+  }
+
+  &__item {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.col__icon {
+  i {
+    font-size: 30px;
+    cursor: pointer;
+  }
+}
+
+.partner__logo {
+  width: 144px;
+  height: 48px;
+  background-image: url("../../assets/partner.png");
+  &__agoda {
+    background-position: 0 -90px;
+  }
+  &__priceline {
+    background-position: -144px -148px;
+  }
+  &__kayak {
+    background-position: 0 -148px;
+  }
+  &__rental {
+    background-position: -288px -148px;
+  }
+  &__booking {
+    background-position: -144px -90px;
+  }
+  &__ot {
+    background-position: -288px -90px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .help {
+    &__title,
+    &__item {
+      width: 100%;
+    }
+  }
+}
