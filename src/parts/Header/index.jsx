@@ -25,6 +25,7 @@ function Header() {
                             </li>
                         </ul>
                         <div className="d-flex" role="search">
+                            <a href="" role="button" className="btn__register__rental">List your place</a>
                             <a href='' role="button" className="btn__cart">
                                 <i className='bx bx-cart ico__cart'></i></a>
                             <a href='' role="button" className="btn__signin">Sign in</a>

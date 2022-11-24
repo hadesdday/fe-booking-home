@@ -15,6 +15,20 @@
     }
   }
 
+  &__register__rental {
+    border: 1px solid $pink-color;
+    color: $pink-color;
+    padding: 10px;
+    transition: all ease-in-out 0.25s;
+    border-radius: 5px;
+    margin-right: 1em;
+
+    &:hover {
+      color: #fff;
+      background-color: $pink-color;
+    }
+  }
+
   &__create__account,
   &__signin {
     padding: 10px;
