@@ -4,7 +4,7 @@ import "./styles.scss";
 function Header() {
     return (
         <>
-            <nav className="navbar navbar-expand-lg bg-light">
+            <nav className="navbar navbar-expand-lg bg-white">
                 <div className="container-fluid">
                     <a className="navbar-brand" href="">gotrip</a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapse__navbar" aria-controls="collapse__navbar" aria-expanded="false" aria-label="Toggle navigation">
