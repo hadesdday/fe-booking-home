@@ -1,0 +1,21 @@
+@import "./settings.scss";
+
+.fw-500 {
+  font-weight: 500 !important;
+}
+
+.z-2 {
+  z-index: 2 !important;
+}
+
+.z-3 {
+  z-index: 3 !important;
+}
+
+.bx__shadow {
+  box-shadow: 0 1px 6px 3px $shadow-color;
+}
+
+.fs-180 {
+  font-size: 180%;
+}

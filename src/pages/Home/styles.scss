@@ -1,0 +1,96 @@
+@import "../../settings";
+.cta__title {
+  top: 48%;
+}
+
+img.h-60 {
+  height: 60%;
+  object-fit: cover;
+}
+
+.btn {
+  &__day__options,
+  &__search {
+    border: 1px solid $main-color;
+    margin-left: 8px;
+    transition: all ease-in-out 0.2s;
+    background-color: #fff;
+    color: $main-color;
+    font-size: 90%;
+    font-weight: 600;
+
+    &:hover {
+      background-color: $main-color;
+      color: #fff;
+    }
+
+    &.active {
+      background-color: $main-color;
+      color: #fff;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+.search__box {
+  box-shadow: 0 1px 6px 3px $shadow-color;
+}
+
+.input__search {
+  background: url("../../assets/search_icon.png") no-repeat left;
+  background-size: 20px;
+  background-position: 15px;
+  padding-left: 50px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.input__date {
+  border: none;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.option {
+  &__date {
+    width: 47%;
+    margin-right: 1em;
+  }
+  &__people {
+    width: 47%;
+    margin-left: 1em;
+  }
+}
+
+.no__content__after::after {
+  content: "" !important;
+  border: none;
+}
+
+input.input__people::-webkit-outer-spin-button,
+input.input__people::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 220px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
