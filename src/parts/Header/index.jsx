@@ -4,7 +4,7 @@ import "./styles.scss";
 function Header() {
     return (
         <>
-            <nav className="navbar navbar-expand-lg bg-white">
+            <nav className="navbar navbar-expand-lg bg-white position-sticky top-0 z-3">
                 <div className="container-fluid">
                     <a className="navbar-brand" href="">gotrip</a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapse__navbar" aria-controls="collapse__navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,12 +13,12 @@ function Header() {
                     <div className="collapse navbar-collapse" id="collapse__navbar">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <a className="nav-link fw-bold" href="">Home</a>
+                                <a className="nav-link fw-semibold" href="">Home</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link fw-bold" href="">Explore</a>
+                                <a className="nav-link fw-semibold" href="">Explore</a>
                             </li>
-                            <li className="nav-item fw-bold">
+                            <li className="nav-item fw-semibold">
                                 <a className="nav-link" href="">
                                     Coupon & Deals
                                 </a>
