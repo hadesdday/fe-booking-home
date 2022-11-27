@@ -8,9 +8,14 @@ img.h-60 {
   object-fit: cover;
 }
 
+.img-cover {
+  object-fit: cover !important;
+}
+
 .btn {
   &__day__options,
-  &__search {
+  &__search,
+  &__more {
     border: 1px solid $main-color;
     margin-left: 8px;
     transition: all ease-in-out 0.2s;
@@ -93,4 +98,18 @@ input.input__people::-webkit-inner-spin-button {
 
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+.recommend {
+  &__tab {
+    list-style-type: none;
+  }
+  &__location {
+    transition: all ease-in-out 0.25s;
+    cursor: pointer;
+
+    &.active {
+      border-bottom: 1px solid $main-color !important;
+    }
+  }
 }
