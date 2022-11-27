@@ -1,5 +1,4 @@
 import React from 'react';
-import "./styles.scss";
 
 function RecommendHome(props) {
     const { imgSrc, name, price, location, rating } = props;
@@ -11,7 +10,7 @@ function RecommendHome(props) {
 
     var ratingElements = [];
     for (let i = 1; i <= Number(rating); i++) {
-        ratingElements.push(<i key={i} className='bx bxs-star'></i>);
+        ratingElements.push(<i key={i} className='bx bxs-star cl-pink'></i>);
     }
 
     return (
