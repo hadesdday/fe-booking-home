@@ -1,12 +1,47 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import DatePicker, { utils } from '@hassanmojab/react-modern-calendar-datepicker';
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { FreeMode, Navigation, Pagination } from "swiper";
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Swiper, SwiperSlide } from "swiper/react";
+import RecommendHome from '../../components/RecommendHome';
+
 import Background from "../../assets/background.jpg";
+
+import Banner1 from "../../assets/promotion/banner1.png";
+import Banner10 from "../../assets/promotion/banner10.png";
+import Banner11 from "../../assets/promotion/banner11.png";
+import Banner12 from "../../assets/promotion/banner12.png";
+import Banner2 from "../../assets/promotion/banner2.png";
+import Banner3 from "../../assets/promotion/banner3.png";
+import Banner4 from "../../assets/promotion/banner4.png";
+import Banner5 from "../../assets/promotion/banner5.png";
+import Banner6 from "../../assets/promotion/banner6.png";
+import Banner7 from "../../assets/promotion/banner7.png";
+import Banner8 from "../../assets/promotion/banner8.png";
+import Banner9 from "../../assets/promotion/banner9.png";
+
+import Pic1 from "../../assets/location/pic1.jpg";
+import Pic2 from "../../assets/location/pic2.jpg";
+import Pic3 from "../../assets/location/pic3.jpg";
+import Pic4 from "../../assets/location/pic4.jpg";
+import Pic5 from "../../assets/location/pic5.jpeg";
+import Pic6 from "../../assets/location/pic6.jpg";
+import Pic7 from "../../assets/location/pic7.jpg";
+import Pic8 from "../../assets/location/pic8.jpg";
+import Pic9 from "../../assets/location/pic9.png";
+
+import Home1 from "../../assets/home1.png";
+
 import "./styles.scss";
 
 function Home(props) {
-
     const [option, setOption] = useState(0);
+    const [featuredLocation, setFeaturedLocation] = useState("Ho Chi Minh");
 
     const currentDate = new Date();
     const onNextDate = new Date(new Date().setDate(currentDate.getDate() + 1));
@@ -39,6 +74,17 @@ function Home(props) {
     console.log("over night ", selectedDayRange);
     console.log("day use ", selectedDay);
     console.log("home ", home);
+
+    useEffect(() => {
+        const refetch = (() => {
+            console.log("changed location", featuredLocation);
+            return;
+        });
+        //cleanup function
+        return () => {
+            refetch();
+        };
+    }, [featuredLocation]);
 
     function getDateRangeInString(input) {
         if (input.from && input.to) {
@@ -88,6 +134,10 @@ function Home(props) {
             </div>
         </div>
     )
+
+    const FeaturedLocationListItem = ({ location }) => (
+        <li className={`p-3 border-bottom recommend__location ${featuredLocation === location && "active"}`} onClick={() => setFeaturedLocation(location)}>{location}</li>
+    );
 
     function onChangePeople(event) {
         var target = event.target;
@@ -146,9 +196,34 @@ function Home(props) {
         })
     }
 
+    var bannerArr = [];
+    var locationArr = [];
+    bannerArr.push(Banner1);
+    bannerArr.push(Banner2);
+    bannerArr.push(Banner3);
+    bannerArr.push(Banner4);
+    bannerArr.push(Banner5);
+    bannerArr.push(Banner6);
+    bannerArr.push(Banner7);
+    bannerArr.push(Banner8);
+    bannerArr.push(Banner9);
+    bannerArr.push(Banner10);
+    bannerArr.push(Banner11);
+    bannerArr.push(Banner12);
+
+    locationArr.push(Pic1);
+    locationArr.push(Pic2);
+    locationArr.push(Pic3);
+    locationArr.push(Pic4);
+    locationArr.push(Pic5);
+    locationArr.push(Pic6);
+    locationArr.push(Pic7);
+    locationArr.push(Pic8);
+    locationArr.push(Pic9);
+
     return (
         <>
-            <div className="d-flex justify-content-center text-center">
+            <div className="d-flex justify-content-center text-center" style={{ maxHeight: 600 }}>
                 <div className="row g-0">
                     <img src={Background} alt="404" className='h-60' />
                     <div className="position-absolute start-50 translate-middle text-white cta__title z-2">
@@ -250,12 +325,87 @@ function Home(props) {
                                         </div>
                                     </div>
                                 </div>
-
                                 <div className="row mt-4 justify-content-center">
                                     <a href="" role="button" className='btn__search active rounded-1 w-50 p-2'>SEARCH</a>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div className="row g-0 text-center mt-5">
+                <h3 className='fw-semibold'>Accommodation Promotions</h3>
+                <Swiper
+                    navigation={true}
+                    pagination={{
+                        clickable: true
+                    }}
+                    slidesPerView={2}
+                    spaceBetween={30}
+                    freeMode={true}
+                    modules={[Navigation, Pagination, FreeMode]} className="w-75">
+                    {
+                        bannerArr.map((item, index) =>
+                            <SwiperSlide key={index}>
+                                <a href="#">
+                                    <div className="row h-100">
+                                        <img src={item} alt="" className='rounded-5' />
+                                    </div>
+                                </a>
+                            </SwiperSlide>)
+                    }
+                </Swiper>
+            </div>
+            <div className="row g-0 text-center mt-5 h-30">
+                <h3 className="fw-semibold">Top destinations</h3>
+                <Swiper
+                    navigation={true}
+                    spaceBetween={30}
+                    pagination={{
+                        clickable: true
+                    }}
+                    slidesPerView={5}
+                    freeMode={true}
+                    modules={[Navigation, Pagination, FreeMode]} className="w-75">
+                    {
+                        locationArr.map((item, index) =>
+                            <SwiperSlide key={index}>
+                                <a href="#">
+                                    <div className="row d-flex justify-content-center mb-2">
+                                        <img src={item} alt="" className='rounded-circle' style={{ width: "150px", height: "120px" }} />
+                                    </div>
+                                    <h5 className='text-black fw-semibold'>Ho Chi Minh City</h5>
+                                    <p className="text-muted">99,999 accommodations</p>
+                                </a>
+                            </SwiperSlide>)
+                    }
+                </Swiper>
+            </div>
+
+            <div className="row g-0 text-center mt-5">
+                <h3 className="fw-semibold">Featured homes recommended for you</h3>
+
+                <ul className='d-flex align-items-center justify-content-center recommend__tab'>
+                    <FeaturedLocationListItem location={"Ho Chi Minh"} />
+                    <FeaturedLocationListItem location={"Ha Noi"} />
+                    <FeaturedLocationListItem location={"Da Nang"} />
+                    <FeaturedLocationListItem location={"Da Lat"} />
+                    <FeaturedLocationListItem location={"Vung Tau"} />
+                </ul>
+            </div>
+            <div className="featured__location__list container d-flex justify-content-center">
+                <div className="row w-95">
+                    <RecommendHome imgSrc={Home1} name="Nikko Apartments - The Classy Life" rating={5} location={`${featuredLocation}1`} price={623484} />
+                    <RecommendHome imgSrc={Home1} name="Nikko Apartments - The Classy Life" rating={4} location={`${featuredLocation}2`} price={623484} />
+                    <RecommendHome imgSrc={Home1} name="Nikko Apartments - The Classy Life" rating={3} location={`${featuredLocation}3`} price={623484} />
+                    <RecommendHome imgSrc={Home1} name="Nikko Apartments - The Classy Life" rating={2} location={`${featuredLocation}4`} price={623484} />
+                    <RecommendHome imgSrc={Home1} name="Nikko Apartments - The Classy Life" rating={2} location={`${featuredLocation}5`} price={623484} />
+                    <RecommendHome imgSrc={Home1} name="Nikko Apartments - The Classy Life" rating={2} location={`${featuredLocation}6`} price={623484} />
+                    <RecommendHome imgSrc={Home1} name="Nikko Apartments - The Classy Life" rating={2} location={`${featuredLocation}7`} price={623484} />
+                    <RecommendHome imgSrc={Home1} name="Nikko Apartments - The Classy Life" rating={2} location={`${featuredLocation}8`} price={623484} />
+
+                    <div className="row justify-content-center mt-3">
+                        <a href="" role={"button"} className="btn btn__more active w-25 p-2">See more ({featuredLocation}) properties</a>
                     </div>
                 </div>
             </div>
