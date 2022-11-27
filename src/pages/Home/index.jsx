@@ -36,8 +36,10 @@ import Pic8 from "../../assets/location/pic8.jpg";
 import Pic9 from "../../assets/location/pic9.png";
 
 import Home1 from "../../assets/home1.png";
+import Home2 from "../../assets/home2.jpg";
 
 import "./styles.scss";
+import RecommendPlaces from '../../components/RecommendPlaces';
 
 function Home(props) {
     const [option, setOption] = useState(0);
@@ -407,6 +409,20 @@ function Home(props) {
                     <div className="row justify-content-center mt-3">
                         <a href="" role={"button"} className="btn btn__more active w-25 p-2">See more ({featuredLocation}) properties</a>
                     </div>
+                </div>
+            </div>
+
+            <div className="row g-0 text-center mt-5">
+                <h3 className="fw-semibold">Recommended places to stay for your next trip!</h3>
+            </div>
+
+            <div className="container">
+                <div className="row justify-content-center pb-5">
+                    <RecommendPlaces imgSrc={Home2} name="The Myst Dong Khoi" location="District 8" rating={5} discount={36} price={3639184} />
+                    <RecommendPlaces imgSrc={Home2} name="The Myst Dong Khoi" location="District 8" rating={4} discount={36} price={3639184} />
+                    <RecommendPlaces imgSrc={Home2} name="The Myst Dong Khoi" location="District 8" rating={3} discount={36} price={3639184} />
+                    <RecommendPlaces imgSrc={Home2} name="The Myst Dong Khoi" location="District 8" rating={2} discount={36} price={3639184} />
+                    <RecommendPlaces imgSrc={Home2} name="The Myst Dong Khoi" location="District 8" rating={1} discount={36} price={3639184} />
                 </div>
             </div>
         </>
