@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function RecommendHome(props) {
     const { imgSrc, name, price, location, rating } = props;
@@ -15,7 +16,7 @@ function RecommendHome(props) {
 
     return (
         <>
-            <a href="" className="col-md-3 col-sm-12 p-1">
+            <Link to={"/home/details/1"} className="col-md-3 col-sm-12 p-1">
                 <div className="row">
                     <img src={imgSrc} alt="" className='w-95' />
                 </div>
@@ -34,7 +35,7 @@ function RecommendHome(props) {
                         {formatter.format(price)}
                     </p>
                 </div>
-            </a>
+            </Link>
         </>
     );
 }

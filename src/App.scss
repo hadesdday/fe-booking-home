@@ -12,6 +12,10 @@
   z-index: 3 !important;
 }
 
+.z-4 {
+  z-index: 4 !important;
+}
+
 .bx__shadow {
   box-shadow: 0 1px 6px 3px $shadow-color;
 }
@@ -38,6 +42,18 @@
 
 .cl-yellow {
   color: #ffa726 !important;
+}
+
+.pr-20 {
+  padding-right: 20px;
+}
+
+.fs-x3 {
+  font-size: 300%;
+}
+
+.c-pointer {
+  cursor: pointer;
 }
 
 #scrollToTop {
