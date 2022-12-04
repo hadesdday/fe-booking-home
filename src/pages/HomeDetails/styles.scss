@@ -1,0 +1,40 @@
+.btn__show__all {
+  position: absolute;
+  top: 70%;
+  right: 10%;
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 8px;
+  padding: 7px;
+  font-size: 105%;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: all 0.5s ease;
+  background-color: black;
+}
+
+.show {
+  opacity: 1;
+  z-index: 4;
+}
+
+.overlay__img {
+  max-height: 650px;
+  object-fit: cover;
+  user-select: none;
+}
+
+@media screen and (max-width: 600px) {
+  .btn__show__all {
+    display: none;
+  }
+  .hide__mobile {
+    display: none;
+  }
+}
