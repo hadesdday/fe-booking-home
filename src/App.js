@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import "./App.scss";
 import Home from "./pages/Home";
-
+import {BrowserRouter, Routes, Route } from 'react-router-dom';
+import Switch from 'react-router';
+import Login from "./pages/Account/Login"
+import Register from "./pages/Account/Register";
 function App() {
   const [visible, setVisible] = useState(false);
 
@@ -25,7 +28,7 @@ function App() {
 
   return (
     <>
-      <Home />
+      {/*<Home />
       <div
         id={`scrollToTop`}
         className={`${visible && "show"}`}
@@ -33,6 +36,14 @@ function App() {
       >
         <i className="bx bx-chevrons-up"></i>
       </div>
+      */}
+      <BrowserRouter>
+        <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route path="Login" element={<Login />} />
+            <Route path="Register" element={<Register />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

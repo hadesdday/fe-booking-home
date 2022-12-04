@@ -1,4 +1,5 @@
 import React from 'react';
+import { Outlet, Link } from "react-router-dom";
 import "./styles.scss";
 
 function Header() {
@@ -28,12 +29,15 @@ function Header() {
                             <a href="" role="button" className="btn__register__rental">List your place</a>
                             <a href='' role="button" className="btn__cart">
                                 <i className='bx bx-cart ico__cart'></i></a>
-                            <a href='' role="button" className="btn__signin">Sign in</a>
-                            <a href="" role="button" className="btn__create__account">Create account</a>
+                            
+                            <a href="/Login" role="button" className="btn__signin">Sign in</a>
+                            
+                            <a href="/Register" role="button" className="btn__create__account">Create Account</a>
                         </div>
                     </div>
                 </div>
             </nav>
+            <Outlet />
         </>
     );
 }
