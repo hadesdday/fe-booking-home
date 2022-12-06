@@ -40,38 +40,14 @@ import Home2 from "../../assets/home2.jpg";
 
 import "./styles.scss";
 import RecommendPlaces from '../../components/RecommendPlaces';
+import { useContext } from 'react';
+import { AppContext } from '../../context/AppContext';
 
 function Home(props) {
     const [option, setOption] = useState(0);
-    const [featuredLocation, setFeaturedLocation] = useState("Ho Chi Minh");
 
-    const currentDate = new Date();
-    const onNextDate = new Date(new Date().setDate(currentDate.getDate() + 1));
-
-    const defaultFrom = {
-        year: currentDate.getFullYear(),
-        month: currentDate.getMonth() + 1,
-        day: currentDate.getDate()
-    };
-
-    const onDefaultTo = {
-        year: onNextDate.getFullYear(),
-        month: onNextDate.getMonth() + 1,
-        day: onNextDate.getDate()
-    };
-
-    const defaultRange = {
-        from: defaultFrom,
-        to: onDefaultTo,
-    };
-
-    const [selectedDayRange, setSelectedDayRange] = useState(defaultRange);
-    const [selectedDay, setSelectedDay] = useState(defaultFrom);
-    const [home, setHome] = useState({
-        room: 1,
-        adults: 1,
-        child: 0
-    });
+    const { featuredLocation, selectedDayRange, selectedDay,
+        home, setFeaturedLocation, setSelectedDayRange, setSelectedDay, setHome } = useContext(AppContext);
 
     console.log("over night ", selectedDayRange);
     console.log("day use ", selectedDay);
@@ -225,7 +201,7 @@ function Home(props) {
 
     return (
         <>
-            <div className="d-flex justify-content-center text-center" style={{ maxHeight: 600 }}>
+            <div className="d-flex justify-content-center text-center mh-600" >
                 <div className="row g-0">
                     <img src={Background} alt="404" className='h-60' />
                     <div className="position-absolute start-50 translate-middle text-white cta__title z-2">
@@ -374,7 +350,7 @@ function Home(props) {
                             <SwiperSlide key={index}>
                                 <a href="#">
                                     <div className="row d-flex justify-content-center mb-2">
-                                        <img src={item} alt="" className='rounded-circle' style={{ width: "150px", height: "120px" }} />
+                                        <img src={item} alt="" className='rounded-circle location__avatar' />
                                     </div>
                                     <h5 className='text-black fw-semibold'>Ho Chi Minh City</h5>
                                     <p className="text-muted">99,999 accommodations</p>

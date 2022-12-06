@@ -10,18 +10,52 @@
 }
 
 .overlay {
+  display: none;
   position: fixed;
   inset: 0;
   height: 100%;
   width: 100%;
-  opacity: 0;
   transition: all 0.5s ease;
   background-color: black;
 }
 
+@keyframes show {
+  0% {
+    display: none;
+    opacity: 0;
+  }
+  1% {
+    display: block;
+  }
+  100% {
+    display: block;
+    opacity: 1;
+  }
+}
+
+@keyframes hide {
+  0% {
+    display: block;
+    opacity: 1;
+  }
+  99% {
+    display: block;
+  }
+  100% {
+    display: none;
+    opacity: 0;
+  }
+}
+
+.btn__show__all,
+.overlay {
+  animation: show 200ms linear;
+  animation-fill-mode: forwards;
+}
+
 .show {
-  opacity: 1;
-  z-index: 4;
+  display: block;
+  z-index: 100;
 }
 
 .overlay__img {
@@ -30,11 +64,36 @@
   user-select: none;
 }
 
+.avatar {
+  max-width: 70px;
+  height: 65px;
+}
+
+.mobile__show {
+  display: none;
+}
+
+.slide__show__mobile {
+  max-width: 550px;
+}
+
+.btn__reserve {
+  background-color: #5392f9;
+  transition: all ease 0.3s;
+
+  &:hover {
+    background-color: #53b7ff;
+  }
+}
+
 @media screen and (max-width: 600px) {
   .btn__show__all {
     display: none;
   }
   .hide__mobile {
     display: none;
+  }
+  .mobile__show {
+    display: flex;
   }
 }

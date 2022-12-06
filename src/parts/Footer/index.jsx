@@ -1,34 +1,39 @@
 import React from 'react';
+import { useContext } from 'react';
+import { AppContext } from '../../context/AppContext';
 import "./styles.scss";
 
 function Footer(props) {
     const year = new Date().getFullYear();
 
+
+    const { showOverlay } = useContext(AppContext);
+
     return (
         <>
-            <div className="container-fluid bg-light">
+            <div className={`container-fluid bg-light`}>
                 <div className="row text-start p-5">
                     <div className="col-md-3 col-sm-12 p-5 footer__col">
                         <div className="row d-flex justify-content-center">
                             <p className='fw-bold help__title'>Help</p>
-                            <a href="" className='text-black-50 help__item'>FAQs</a>
-                            <a href="" className='text-black-50 help__item'>Privacy policy</a>
-                            <a href="" className='text-black-50 help__item'>Terms of use</a>
+                            <a href="/faq" className='text-black-50 help__item'>FAQs</a>
+                            <a href="/policies" className='text-black-50 help__item'>Privacy policy</a>
+                            <a href="/terms" className='text-black-50 help__item'>Terms of use</a>
                         </div>
                     </div>
                     <div className="col-md-3 col-sm-12 p-5 footer__col">
                         <div className="row d-flex justify-content-center">
                             <p className='fw-bold help__title'>Company</p>
-                            <a href="" className='text-black-50 help__item'>About us</a>
-                            <a href="" className='text-black-50 help__item'>Contact</a>
+                            <a href="/about" className='text-black-50 help__item'>About us</a>
+                            <a href="/contact" className='text-black-50 help__item'>Contact</a>
                         </div>
                     </div>
                     <div className="col-md-3 col-sm-12 p-5 footer__col">
                         <div className="row d-flex justify-content-center">
                             <p className='fw-bold help__title'>Destinations</p>
-                            <a href="" className='text-black-50 help__item'>For you</a>
-                            <a href="" className='text-black-50 help__item'>Trending</a>
-                            <a href="" className='text-black-50 help__item'>Best selling</a>
+                            <a href="/for-you" className='text-black-50 help__item'>For you</a>
+                            <a href="/trending" className='text-black-50 help__item'>Trending</a>
+                            <a href="/best-selling" className='text-black-50 help__item'>Best selling</a>
                         </div>
                     </div>
                     <div className="col-md-3 col-sm-12 p-5 footer__col">
@@ -37,22 +42,22 @@ function Footer(props) {
                                 <p className='fw-bold help__title'>Follow Us</p>
                             </div>
                             <div className="col-3 col__icon">
-                                <a href="">
+                                <a href="facebook.com">
                                     <i className='bx bxl-facebook meta__ico'></i>
                                 </a>
                             </div>
                             <div className="col-3 col__icon">
-                                <a href="">
+                                <a href="twitter.com">
                                     <i className='bx bxl-twitter meta__ico'></i>
                                 </a>
                             </div>
                             <div className="col-3 col__icon">
-                                <a href="">
+                                <a href="tiktok.com">
                                     <i className='bx bxl-tiktok text-dark' ></i>
                                 </a>
                             </div>
                             <div className="col-3 col__icon">
-                                <a href="">
+                                <a href="youtube.com">
                                     <i className='bx bxl-youtube text-danger' ></i>
                                 </a>
                             </div>

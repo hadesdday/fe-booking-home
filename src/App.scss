@@ -16,8 +16,16 @@
   z-index: 4 !important;
 }
 
+.z-5 {
+  z-index: 5;
+}
+
 .bx__shadow {
-  box-shadow: 0 1px 6px 3px $shadow-color;
+  box-shadow: 0 1px 6px 3px $shadow-color !important;
+}
+
+.bx__shadow-1 {
+  box-shadow: 0 1px 5px 1px $shadow-color !important;
 }
 
 .fs-180 {
@@ -54,6 +62,34 @@
 
 .c-pointer {
   cursor: pointer;
+}
+
+.mr-15 {
+  margin-right: 15px !important;
+}
+
+.mh-600 {
+  max-height: 600px;
+}
+
+.rounded-top-left {
+  border-top-left-radius: 10px;
+}
+
+.rounded-top-right {
+  border-top-right-radius: 10px;
+}
+
+.bg-main {
+  background-color: $main-color !important;
+}
+
+.c-default {
+  cursor: default;
+}
+
+.w-70 {
+  width: 70% !important;
 }
 
 #scrollToTop {
