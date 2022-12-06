@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.scss";
+import AppProvider from "./context/AppContext";
 import Login from "./pages/Account/Login";
 import Register from "./pages/Account/Register";
 import Home from "./pages/Home";
@@ -38,14 +39,16 @@ function App() {
         <i className="bx bx-chevrons-up"></i>
       </div>
       <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route path="Login" element={<Login />} />
-          <Route path="Register" element={<Register />} />
-          <Route path="/home/details/:id" element={<HomeDetails />} />
-        </Routes>
-        <Footer />
+        <AppProvider>
+          <Header />
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route path="Login" element={<Login />} />
+            <Route path="Register" element={<Register />} />
+            <Route path="/home/details/:id" element={<HomeDetails />} />
+          </Routes>
+          <Footer />
+        </AppProvider>
       </BrowserRouter>
     </>
   );
