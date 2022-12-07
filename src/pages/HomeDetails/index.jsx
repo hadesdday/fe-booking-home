@@ -1,8 +1,6 @@
 import DatePicker, { utils } from '@hassanmojab/react-modern-calendar-datepicker';
-import React, { useContext, useEffect } from 'react';
-import { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
 import { FreeMode, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "../../assets/home1.png";
@@ -15,7 +13,9 @@ import Pic6 from "../../assets/location/pic6.jpg";
 import Pic7 from "../../assets/location/pic7.jpg";
 import Pic8 from "../../assets/location/pic8.jpg";
 import Pic9 from "../../assets/location/pic9.png";
+import Toasts from '../../components/Toasts';
 import { AppContext } from '../../context/AppContext';
+import { toastSuccess } from '../../services/ToastService';
 import { Formatter } from '../../utils/MoneyFormatter';
 import "./styles.scss";
 
@@ -175,6 +175,8 @@ function HomeDetails(props) {
         document.body.style.overflow = "auto";
     }
 
+
+
     //this is sample data if db have data fetch from database
     var pricePernight = 1234567;
     var price = pricePernight * getNightNumber(selectedDayRange);
@@ -267,6 +269,7 @@ function HomeDetails(props) {
 
     return (
         <>
+            <Toasts />
             <nav className={`navbar navbar-expand-lg position-sticky top-0 bg-white  border-bottom border-dark ${(!showNav || showContact) ? "" : "z-200"} ${(!showNav) ? "d-none" : ""}`}>
                 <div className="container">
                     <ul className="navbar-nav p-3 mt-0">
@@ -524,7 +527,7 @@ function HomeDetails(props) {
                             </div>
                             <div className="row p-3">
                                 <button className="btn btn__reserve text-white fw-semibold p-3">Reserve</button>
-                                <button className="btn btn__add__cart fw-semibold p-3 mt-4">Add to cart</button>
+                                <button className="btn btn__add__cart fw-semibold p-3 mt-4" onClick={() => toastSuccess("Add to cart successfully")}>Add to cart</button>
                             </div>
                             <div className="row p-3">
                                 <div className="col">
