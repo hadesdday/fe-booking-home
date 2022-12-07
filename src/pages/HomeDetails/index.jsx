@@ -1,7 +1,8 @@
 import DatePicker, { utils } from '@hassanmojab/react-modern-calendar-datepicker';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import { FreeMode, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "../../assets/home1.png";
@@ -23,8 +24,14 @@ function HomeDetails(props) {
 
     const [shorten, setShorten] = useState(false);
     const [shortenAmenities, setShortenAmenities] = useState(false);
+    const [shortenReviews, setShortenReviews] = useState(false);
+    const [showContact, setShowContact] = useState(false);
 
     const { selectedDayRange, home, setSelectedDayRange, setHome, showOverlay, setShowOverlay } = useContext(AppContext);
+
+    // useEffect(() => {
+    //     window.scrollTo(0, 0);
+    // }, []);
 
     const renderCustomOnInput = ({ ref }) => (
         <div className="row" >
@@ -67,6 +74,26 @@ function HomeDetails(props) {
             const fromString = from.year + "/" + from.month + "/" + from.day;
             const toString = to.year + "/" + to.month + "/" + to.day;
             return fromString + " - " + toString;
+        } else {
+            return "";
+        }
+    }
+
+    function getDateRangeInPlainWithMonth(input) {
+        if (input.from && input.to) {
+            const { from, to } = input;
+            const fromString = from.year + "/" + from.month + "/" + from.day;
+            const toString = to.year + "/" + to.month + "/" + to.day;
+
+            const d1 = new Date(fromString);
+            const d2 = new Date(toString);
+
+            const month1 = d1.toLocaleString('default', { month: 'long' });
+            const month2 = d2.toLocaleString('default', { month: 'long' });
+
+            const finalFromString = from.year + "/" + month1 + "/" + from.day;
+            const finalToString = to.year + "/" + month2 + "/" + to.day;
+            return finalFromString + " - " + finalToString;
         } else {
             return "";
         }
@@ -129,6 +156,25 @@ function HomeDetails(props) {
         })
     }
 
+    function scrollToId(id) {
+        document.getElementById(id).scrollIntoView({
+            behavior: 'smooth'
+        });
+    }
+
+    function showAllReview(id, content) {
+        document.getElementById(id).innerHTML = content;
+        document.getElementById("show__" + id).style.display = "none";
+    }
+
+    function disableScrollbar() {
+        document.body.style.overflow = "hidden";
+    }
+
+    function enableScrollbar() {
+        document.body.style.overflow = "auto";
+    }
+
     //this is sample data if db have data fetch from database
     var pricePernight = 1234567;
     var price = pricePernight * getNightNumber(selectedDayRange);
@@ -142,6 +188,59 @@ function HomeDetails(props) {
     var amenities = ["Kitchen", "Wifi", "Dedicated workspace", "Free street parking", "Washer", "Air conditioning", "Refrigerator", "Long term stays allowed",
         "Coffee maker", "Heating", "Private entrance", "Long term stays allowed", "Hangers", "Smoke alarm"];
 
+    var policies = ["No smoking", "No pets", "No parties or events", "Check-in is anytime after 3PM", "Check out by 11AM", "Self check-in with keypad"];
+
+    var reviews = [
+        {
+            "name": "Nguyễn Văn A0",
+            "avatar": "https://picsum.photos/150/150",
+            "date": "2021-05-01",
+            "content": "There was a bit of problem with the check-in, as the bnb location has been moved to a new address (about 3-4km away from the one showed on airbnb). But the rest was lovely. I stayed for 1 night right after the long Vietnamese holiday so it was rather quiet. Diep was very helpful, he got me dinner and helped me to rent a motorbike. They have really lovely dogs too."
+        },
+        {
+            "name": "Nguyễn Văn A1",
+            "avatar": "https://picsum.photos/151/150",
+            "date": "2021-05-01",
+            "content": "Good"
+        },
+        {
+            "name": "Nguyễn Văn A2",
+            "avatar": "https://picsum.photos/152/150",
+            "date": "2021-05-01",
+            "content": "Good"
+        },
+        {
+            "name": "Nguyễn Văn A3",
+            "avatar": "https://picsum.photos/153/150",
+            "date": "2021-05-01",
+            "content": "Good"
+        },
+        {
+            "name": "Nguyễn Văn A4",
+            "avatar": "https://picsum.photos/154/150",
+            "date": "2021-05-01",
+            "content": "Good"
+        },
+        {
+            "name": "Nguyễn Văn A5",
+            "avatar": "https://picsum.photos/155/150",
+            "date": "2021-05-01",
+            "content": "Good"
+        },
+        {
+            "name": "Nguyễn Văn A6",
+            "avatar": "https://picsum.photos/156/150",
+            "date": "2021-05-01",
+            "content": "Good"
+        },
+        {
+            "name": "Nguyễn Văn A7",
+            "avatar": "https://picsum.photos/157/150",
+            "date": "2021-05-01",
+            "content": "There was a bit of problem with the check-in, as the bnb location has been moved to a new address (about 3-4km away from the one showed on airbnb). But the rest was lovely. I stayed for 1 night right after the long Vietnamese holiday so it was rather quiet. Diep was very helpful, he got me dinner and helped me to rent a motorbike. They have really lovely dogs too."
+        },
+    ];
+
     var locationArr = [];
 
     locationArr.push(Pic1);
@@ -153,10 +252,42 @@ function HomeDetails(props) {
     locationArr.push(Pic7);
     locationArr.push(Pic8);
     locationArr.push(Pic9);
+    // 980 903
+
+    const [showNav, setShowNav] = useState(false);
+    window.addEventListener("scroll", (event) => {
+        let scroll = window.scrollY;
+        if (scroll > 600) {
+            if (!showNav)
+                setShowNav(true);
+        } else {
+            setShowNav(false);
+        }
+    });
 
     return (
         <>
-            <div className="container mt-5">
+            <nav className={`navbar navbar-expand-lg position-sticky top-0 bg-white  border-bottom border-dark ${(!showNav || showContact) ? "" : "z-200"} ${(!showNav) ? "d-none" : ""}`}>
+                <div className="container">
+                    <ul className="navbar-nav p-3 mt-0">
+                        <div className="row fw-semibold">
+                            <li className="nav-item col-3">
+                                <a className="nav-link" onClick={() => scrollToId("photos")}>Photos</a>
+                            </li>
+                            <li className="nav-item col-3">
+                                <a className="nav-link" onClick={() => scrollToId("amenities")}>Amenities</a>
+                            </li>
+                            <li className="nav-item col-3">
+                                <a className="nav-link" onClick={() => scrollToId("reviews")}>Reviews</a>
+                            </li>
+                            <li className="nav-item col-3">
+                                <a className="nav-link" onClick={() => scrollToId("policies")}>Policies</a>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
+            </nav>
+            <div className={`container mt-5`}>
                 <div className="row">
                     <div className="row">
                         <h2 className='fw-semibold'>Biệt thự sang trọng Sunset 3BR  có lối vào BÃI BIỂN</h2>
@@ -164,11 +295,11 @@ function HomeDetails(props) {
                     <div className="row">
                         <div className="col-sm-2 col-md-1"><i className='bx bxs-star'></i> <span className="fw-semibold">4,88</span></div>
                         <div className="col-sm-8 col-md-4">
-                            <a href="#review" className='text-decoration-underline text-black fw-semibold pr-20'>78 reviews</a>
-                            <a href="#location" className='text-decoration-underline text-black fw-semibold'>Phu Quoc</a>
+                            <a className='text-decoration-underline text-black fw-semibold pr-20' onClick={() => scrollToId("reviews")}>78 reviews</a>
+                            <a className='text-decoration-underline text-black fw-semibold'>Phu Quoc</a>
                         </div>
                     </div>
-                    <div className="row mt-3">
+                    <div className="row mt-3" id='photos'>
                         <div className="mobile__show slide__show__mobile" >
                             <Swiper
                                 navigation={true}
@@ -184,36 +315,36 @@ function HomeDetails(props) {
                                     locationArr.map((item, index) =>
                                         <SwiperSlide key={index}>
                                             <div className="row d-flex justify-content-center">
-                                                <img src={item} alt="" className='w-75 overlay__img' onClick={() => setShowOverlay(true)} />
+                                                <img src={item} alt="" className='w-75 overlay__img' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
                                             </div>
                                         </SwiperSlide>)
                                 }
                             </Swiper>
                         </div>
                         <div className="col-md-6">
-                            <img src={Image} alt="" className='w-100 rounded-start hide__mobile c-pointer' onClick={() => setShowOverlay(true)} />
+                            <img src={Image} alt="" className='w-100 rounded-start hide__mobile c-pointer' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
                         </div>
                         <div className="col-md-6">
                             <div className="row pb-3">
                                 <div className="col-md-6">
-                                    <img src={Image} alt="" className='w-100 hide__mobile c-pointer' onClick={() => setShowOverlay(true)} />
+                                    <img src={Image} alt="" className='w-100 hide__mobile c-pointer' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
                                 </div>
                                 <div className="col-md-6">
-                                    <img src={Image} alt="" className='w-100 rounded-end hide__mobile c-pointer' onClick={() => setShowOverlay(true)} />
+                                    <img src={Image} alt="" className='w-100 rounded-end hide__mobile c-pointer' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="col-md-6">
-                                    <img src={Image} alt="" className='w-100 hide__mobile c-pointer' onClick={() => setShowOverlay(true)} />
+                                    <img src={Image} alt="" className='w-100 hide__mobile c-pointer' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
                                 </div>
                                 <div className="col-md-6">
-                                    <img src={Image} alt="" className='w-100 rounded-end hide__mobile c-pointer' onClick={() => setShowOverlay(true)} />
+                                    <img src={Image} alt="" className='w-100 rounded-end hide__mobile c-pointer' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="row mt-5">
-                        <div className="col-8">
+                        <div className="col-md-8 col-sm-12">
                             <div className="row">
                                 <div className="col-md-10">
                                     <div className="row">
@@ -260,10 +391,14 @@ function HomeDetails(props) {
                                 {shorten ? description : shortDescription + "..."}
                                 <p className={`text-decoration-underline text-black fw-semibold p-0 mt-3 c-pointer ${shorten && "d-none"}`} onClick={() => setShorten(true)}>Show more</p>
                             </div>
+
+                            {/* end divider component */}
+                            {/* divider component */}
                             <div className="border-bottom w-95 p-2"></div>
-                            <div className="row mt-4 p-3">
+                            <div className="row mt-4 p-3" id='amenities'>
+                                <h3 className='fw-semibold mb-4'>What this place offers</h3>
                                 {amenities.slice(0, 10).map((item, index) => (
-                                    <div className="col-md-6 col-sm-12" key={index}>
+                                    <div className="col-6" key={index}>
                                         <div className="row">
                                             <div className="col-1"><i className='bx bx-like fs-180'></i></div>
                                             <div className="col-11">
@@ -274,7 +409,7 @@ function HomeDetails(props) {
                                 ))}
                                 {
                                     shortenAmenities && amenities.slice(10, amenities.length).map((item, index) => (
-                                        <div className="col-md-6 col-sm-12" key={index}>
+                                        <div className="col-6" key={index}>
                                             <div className="row">
                                                 <div className="col-1"><i className='bx bx-like fs-180'></i></div>
                                                 <div className="col-11">
@@ -286,13 +421,23 @@ function HomeDetails(props) {
 
                                 {amenities.length > 10 &&
                                     <div className="col mt-3">
-                                        <button className={`btn border border-dark fw-semibold p-3 ${shortenAmenities && "d-none"}`} onClick={() => setShortenAmenities(true)}>Show all {amenities.length} amenities</button>
+                                        <button className={`btn border border-dark fw-semibold p-3 btn__shorten ${shortenAmenities && "d-none"}`} onClick={() => setShortenAmenities(true)}>Show all {amenities.length} amenities</button>
                                     </div>
                                 }
                             </div>
                             {/* end divider component */}
+                            {/* divider component */}
+                            <div className="border-bottom w-95 p-2"></div>
+                            <div className="row mt-4 p-3" id='policies'>
+                                <h3 className='fw-semibold mb-4'>Property policies</h3>
+                                {policies.map((item, index) => (
+                                    <p key={index}> {item}</p>
+                                ))}
+                            </div>
+                            {/* end divider component */}
                         </div>
-                        <div className="col-md-4 col-sm-12 bx__shadow-1 rounded-2">
+                        {/* box reserve */}
+                        <div className="col-md-4 col-sm-12 bx__shadow-1 rounded-2 mh-600">
                             <div className="row p-3 pt-4">
                                 <div className="col-6">
                                     <h5 className='fw-semibold'>{Formatter.format(pricePernight)} <span className='fw-normal fs-6'>night</span></h5>
@@ -379,6 +524,7 @@ function HomeDetails(props) {
                             </div>
                             <div className="row p-3">
                                 <button className="btn btn__reserve text-white fw-semibold p-3">Reserve</button>
+                                <button className="btn btn__add__cart fw-semibold p-3 mt-4">Add to cart</button>
                             </div>
                             <div className="row p-3">
                                 <div className="col">
@@ -400,16 +546,111 @@ function HomeDetails(props) {
                                 </div>
                             </div>
                         </div>
+                        {/* divider component */}
+                        <div className="border-bottom w-95 p-2"></div>
+                        <div className="row mt-4 p-3" id='reviews'>
+                            <h3 className='fw-semibold mb-4'><i className='bx bxs-star'></i> 5.0, {reviews.length} Reviews</h3>
+
+                            <div className="row gx-5">
+                                {!shortenReviews ? reviews.slice(0, 6).map((item, index) => (
+                                    <div className="col-6" key={index}>
+                                        <div className="row">
+                                            <div className="col-1">
+                                                <img src={item.avatar} alt="" className='mini__avatar rounded-circle' />
+                                            </div>
+                                            <div className="col-11">
+                                                <p className="fw-semibold m-0">{item.name}</p>
+                                                <p className='text-muted'>{item.date}</p>
+                                            </div>
+                                        </div>
+                                        <div className="row mb-3">
+                                            <p className='m-0' id={index}>
+                                                {item.content.length > 100 ? item.content.slice(0, 100) + "...." : item.content}
+                                            </p>
+                                            {item.content.length > 100 &&
+                                                <p className={`text-decoration-underline text-black fw-semibold mt-2 c-pointer`} onClick={() => showAllReview(index, item.content)} id={`show__${index}`}>Show more</p>
+                                            }
+                                        </div>
+                                    </div>
+                                ))
+                                    : reviews.map((item, index) => (
+                                        <div className="col-6" key={index}>
+                                            <div className="row">
+                                                <div className="col-1">
+                                                    <img src={item.avatar} alt="" className='mini__avatar rounded-circle' />
+                                                </div>
+                                                <div className="col-11">
+                                                    <p className="fw-semibold m-0">{item.name}</p>
+                                                    <p className='text-muted'>{item.date}</p>
+                                                </div>
+                                            </div>
+                                            <div className="row mb-3">
+                                                <p className='m-0' id={index}>
+                                                    {item.content.length > 100 ? item.content.slice(0, 100) + "...." : item.content}
+                                                </p>
+                                                {item.content.length > 100 &&
+                                                    <p className={`text-decoration-underline text-black fw-semibold mt-2 c-pointer`} onClick={() => showAllReview(index, item.content)} id={`show__${index}`}>Show more</p>
+                                                }
+                                            </div>
+                                        </div>
+                                    ))
+                                }
+                                {reviews.length > 6 &&
+                                    <div className="col mt-3">
+                                        <button className={`btn border border-dark fw-semibold p-3 btn__shorten ${shortenReviews && "d-none"}`} onClick={() => setShortenReviews(true)}>Show all {reviews.length} reviews</button>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        {/* end divider component */}
+                        <div className="border-bottom w-95 p-2"></div>
+                        <div className="row mt-4">
+                            <div className="row">
+                                <div className="col-1">
+                                    <img src={Pic1} alt="" className="rounded-circle avatar" />
+                                </div>
+                                <div className="col-11">
+                                    <p className="fw-semibold">Hosted By Hieu Nguyen</p>
+                                    <p>Joined in February 2020</p>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <p className='pb-2'>
+                                    <i className='bx bxs-star'></i> {reviews.length} Reviews
+                                </p>
+                                <p>Response rate : 100%</p>
+                                <p>Response time : within hour</p>
+                                <div className="col">
+                                    <button className={`btn border border-dark fw-semibold p-3 btn__shorten`} onClick={() => { setShowContact(true); disableScrollbar(); }}>Contact Host</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-
+            {/* slideshow overlay */}
+            <div className={`contact__overlay ${showContact === true ? "show" : "hide"}`}>
+                <div className="text-white">
+                    <div className="p-3 c-pointer" onClick={() => { setShowContact(false); enableScrollbar(); }}>
+                        <i className='bx bx-x fs-x3'></i>
+                    </div>
+                    <div className="position-relative ">
+                        <div className="position-absolute top-50 start-50 translate-middle bg-light text-dark w-50 rounded-1 text-start mt-5">
+                            <div className="row p-4">
+                                <h4 className="fw-semibold">Host Information</h4>
+                                <a href='mailto:gotrip@gmail.com' className='text-black fs-5'><i className='bx bx-envelope'></i> gotrip@gmail.com</a>
+                                <a href='tel:0987654321' className='text-black fs-5'><i className='bx bx-phone'></i> 0987654432</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             {/* slideshow overlay */}
             <div className={`overlay ${showOverlay === true ? "show" : "hide"}`}>
                 <div className="text-white">
-                    <div className="p-3 c-pointer" onClick={() => setShowOverlay(false)}>
+                    <div className="p-3 c-pointer" onClick={() => { setShowOverlay(false); enableScrollbar(); }}>
                         <i className='bx bx-x fs-x3'></i>
                     </div>
                     <Swiper
@@ -435,7 +676,7 @@ function HomeDetails(props) {
             </div>
             <div className="text-end">
                 <div className="btn">
-                    <button className='btn__show__all fw-semibold z-2' type="button" onClick={() => setShowOverlay(true)}><i className='bx bxs-grid'></i> Show all photos</button>
+                    <button className='btn__show__all fw-semibold z-2' type="button" onClick={() => { setShowOverlay(true); disableScrollbar(); }}><i className='bx bxs-grid'></i> Show all photos</button>
                 </div>
             </div>
         </>
