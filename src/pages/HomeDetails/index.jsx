@@ -18,6 +18,7 @@ import { AppContext } from '../../context/AppContext';
 import { toastSuccess } from '../../services/ToastService';
 import { Formatter } from '../../utils/MoneyFormatter';
 import "./styles.scss";
+import $ from 'jquery';
 
 function HomeDetails(props) {
     const { id } = useParams();
@@ -26,6 +27,7 @@ function HomeDetails(props) {
     const [shortenAmenities, setShortenAmenities] = useState(false);
     const [shortenReviews, setShortenReviews] = useState(false);
     const [showContact, setShowContact] = useState(false);
+    const [showReport, setShowReport] = useState(false);
 
     const { selectedDayRange, home, setSelectedDayRange, setHome, showOverlay, setShowOverlay } = useContext(AppContext);
 
@@ -254,7 +256,6 @@ function HomeDetails(props) {
     locationArr.push(Pic7);
     locationArr.push(Pic8);
     locationArr.push(Pic9);
-    // 980 903
 
     const [showNav, setShowNav] = useState(false);
     window.addEventListener("scroll", (event) => {
@@ -267,10 +268,23 @@ function HomeDetails(props) {
         }
     });
 
+    const [reportReason, setReportReason] = useState("");
+    function onChangeReason(e) {
+        console.log(e.target.value);
+        setReportReason(e.target.value);
+    }
+
+    function onSubmitReason() {
+        console.log(reportReason);
+        setShowReport(false);
+        enableScrollbar();
+        toastSuccess("Reported successfully");
+    }
+
     return (
         <>
             <Toasts />
-            <nav className={`navbar navbar-expand-lg position-sticky top-0 bg-white  border-bottom border-dark ${(!showNav || showContact) ? "" : "z-200"} ${(!showNav) ? "d-none" : ""}`}>
+            <nav className={`navbar navbar-expand-lg position-sticky top-0 bg-white  border-bottom border-dark ${(!showNav || showContact || showReport) ? "" : "z-200"} ${(!showNav) ? "d-none" : ""}`}>
                 <div className="container">
                     <ul className="navbar-nav p-3 mt-0">
                         <div className="row fw-semibold">
@@ -548,6 +562,14 @@ function HomeDetails(props) {
                                     <p className='fw-semibold'>{Formatter.format(priceBeforeTaxes)}</p>
                                 </div>
                             </div>
+                            <div className="row p-3 pt-5">
+                                <div className="col-1">
+                                    <i className='bx bxs-flag-alt text-muted'></i>
+                                </div>
+                                <div className="col-11">
+                                    <p className='fw-semibold text-decoration-underline text-muted c-pointer' onClick={() => { setShowReport(true); disableScrollbar(); }}>Report this listing</p>
+                                </div>
+                            </div>
                         </div>
                         {/* divider component */}
                         <div className="border-bottom w-95 p-2"></div>
@@ -644,6 +666,104 @@ function HomeDetails(props) {
                                 <h4 className="fw-semibold">Host Information</h4>
                                 <a href='mailto:gotrip@gmail.com' className='text-black fs-5'><i className='bx bx-envelope'></i> gotrip@gmail.com</a>
                                 <a href='tel:0987654321' className='text-black fs-5'><i className='bx bx-phone'></i> 0987654432</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* slideshow overlay */}
+            <div className={`contact__overlay ${showReport === true ? "show" : "hide"}`}>
+                <div className="text-white">
+                    <div className="p-3 c-pointer" onClick={() => { setShowReport(false); enableScrollbar(); }}>
+                        <i className='bx bx-x fs-x3'></i>
+                    </div>
+                    <div className="position-relative">
+                        <div className="position-absolute top-50 left-25 bg-light text-dark w-50 rounded-1 text-start mt-5">
+                            <div className="row p-4">
+                                <h4 className="fw-semibold">Why are you reporting this listing?</h4>
+                                <p>This won’t be shared with the Host.</p>
+                                <div className="p-3 border-bottom w-95">
+                                    <div className="row">
+                                        <div className="col">
+                                            <label className="form-check-label w-100" htmlFor="incorrect">
+                                                It’s inaccurate or incorrect
+                                            </label>
+                                        </div>
+                                        <div className="col">
+                                            <div className="text-end">
+                                                <input className="form-check-input" onChange={onChangeReason} value="incorrect" type="radio" name="reason" id="incorrect" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="p-3 border-bottom w-95">
+                                    <div className="row">
+                                        <div className="col">
+                                            <label className="form-check-label w-100" htmlFor="real-place">
+                                                It’s not a real place to stay
+                                            </label>
+                                        </div>
+                                        <div className="col">
+                                            <div className="text-end">
+                                                <input className="form-check-input" onChange={onChangeReason} value="fake-place" type="radio" name="reason" id="real-place" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="p-3 border-bottom w-95">
+                                    <div className="row">
+                                        <div className="col">
+                                            <label className="form-check-label w-100" htmlFor="scam">
+                                                It’s a scam
+                                            </label>
+                                        </div>
+                                        <div className="col">
+                                            <div className="text-end">
+                                                <input className="form-check-input" onChange={onChangeReason} value="scam" type="radio" name="reason" id="scam" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="p-3 border-bottom w-95">
+                                    <div className="row">
+                                        <div className="col">
+                                            <label className="form-check-label w-100" htmlFor="offensive">
+                                                It’s offensive
+                                            </label>
+                                        </div>
+                                        <div className="col">
+                                            <div className="text-end">
+                                                <input className="form-check-input" onChange={onChangeReason} value="offensive" type="radio" name="reason" id="offensive" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={`p-3 w-95 ${reportReason === "something" ? "" : "border-bottom"}`} >
+                                    <div className="row">
+                                        <div className="col">
+                                            <label className="form-check-label w-100" htmlFor="something">
+                                                It’s something else
+                                            </label>
+                                        </div>
+                                        <div className="col">
+                                            <div className="text-end">
+                                                <input className="form-check-input" onChange={onChangeReason} value="something" type="radio" name="reason" id="something" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={`p-3 w-95 ${reportReason === "something" ? "" : ""}`}>
+                                    <div className="form-floating">
+                                        <textarea className="form-control" placeholder="Leave your reason here" id="another__reason" name='another__reason' onChange={onChangeReason}></textarea>
+                                        <label htmlFor="another__reason">Comments</label>
+                                    </div>
+                                </div>
+                                <div className="p-3 w-95">
+                                    <div className="text-end">
+                                        <button className='btn btn-dark' onClick={onSubmitReason}>Submit</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
