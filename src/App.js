@@ -4,6 +4,7 @@ import "./App.scss";
 import AppProvider from "./context/AppContext";
 import Login from "./pages/Account/Login";
 import Register from "./pages/Account/Register";
+import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 import HomeDetails from "./pages/HomeDetails";
 import Footer from "./parts/Footer";
@@ -46,6 +47,7 @@ function App() {
             <Route path="Login" element={<Login />} />
             <Route path="Register" element={<Register />} />
             <Route path="/home/details/:id" element={<HomeDetails />} />
+            <Route path="/cart" element={<Cart />} />
           </Routes>
           <Footer />
         </AppProvider>
