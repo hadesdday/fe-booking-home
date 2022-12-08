@@ -1,5 +1,5 @@
 import DatePicker, { utils } from '@hassanmojab/react-modern-calendar-datepicker';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { FreeMode, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -18,7 +18,6 @@ import { AppContext } from '../../context/AppContext';
 import { toastSuccess } from '../../services/ToastService';
 import { Formatter } from '../../utils/MoneyFormatter';
 import "./styles.scss";
-import $ from 'jquery';
 
 function HomeDetails(props) {
     const { id } = useParams();
@@ -31,9 +30,9 @@ function HomeDetails(props) {
 
     const { selectedDayRange, home, setSelectedDayRange, setHome, showOverlay, setShowOverlay } = useContext(AppContext);
 
-    // useEffect(() => {
-    //     window.scrollTo(0, 0);
-    // }, []);
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     const renderCustomOnInput = ({ ref }) => (
         <div className="row" >
@@ -76,26 +75,6 @@ function HomeDetails(props) {
             const fromString = from.year + "/" + from.month + "/" + from.day;
             const toString = to.year + "/" + to.month + "/" + to.day;
             return fromString + " - " + toString;
-        } else {
-            return "";
-        }
-    }
-
-    function getDateRangeInPlainWithMonth(input) {
-        if (input.from && input.to) {
-            const { from, to } = input;
-            const fromString = from.year + "/" + from.month + "/" + from.day;
-            const toString = to.year + "/" + to.month + "/" + to.day;
-
-            const d1 = new Date(fromString);
-            const d2 = new Date(toString);
-
-            const month1 = d1.toLocaleString('default', { month: 'long' });
-            const month2 = d2.toLocaleString('default', { month: 'long' });
-
-            const finalFromString = from.year + "/" + month1 + "/" + from.day;
-            const finalToString = to.year + "/" + month2 + "/" + to.day;
-            return finalFromString + " - " + finalToString;
         } else {
             return "";
         }

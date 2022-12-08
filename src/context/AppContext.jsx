@@ -36,7 +36,6 @@ function AppProvider({ children }) {
 
     const [showOverlay, setShowOverlay] = useState(false);
 
-
     return (
         <AppContext.Provider value={{
             featuredLocation,

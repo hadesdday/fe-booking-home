@@ -5,7 +5,7 @@ import "./styles.scss";
 function Header() {
     return (
         <>
-            <nav className="navbar navbar-expand-lg bg-white z-3">
+            <nav className="navbar navbar-expand-lg bg-white z-3 bx__shadow">
                 <div className="container-fluid">
                     <Link className="navbar-brand" to="/">gotrip</Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapse__navbar" aria-controls="collapse__navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +27,7 @@ function Header() {
                         </ul>
                         <div className="d-flex" role="search">
                             <Link to="/" role="button" className="btn__register__rental">List your place</Link>
-                            <Link to='/' role="button" className="btn__cart">
+                            <Link to='/cart' role="button" className="btn__cart">
                                 <i className='bx bx-cart ico__cart'></i></Link>
 
                             <Link to="/Login" role="button" className="btn__signin">Sign in</Link>
