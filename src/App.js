@@ -5,6 +5,7 @@ import {BrowserRouter, Routes, Route } from 'react-router-dom';
 import Switch from 'react-router';
 import Login from "./pages/Account/Login"
 import Register from "./pages/Account/Register";
+import ResetPassword from "./pages/Account/ResetPassword";
 function App() {
   const [visible, setVisible] = useState(false);
 
@@ -42,6 +43,7 @@ function App() {
             <Route exact path="/" element={<Home />} />
             <Route path="Login" element={<Login />} />
             <Route path="Register" element={<Register />} />
+            <Route path="ResetPassword" element={<ResetPassword/>} />
         </Routes>
       </BrowserRouter>
     </>

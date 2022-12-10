@@ -8,17 +8,7 @@ function Register () {
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
     const [confirmpassword,setConfirmPassword] = useState('');
-    /*
-    const [errMsg,setErrMsg]=useState('');
-    const [errRef,setErrRef]=useState('');
-
-    useEffect (()=>{
-        useRef.current.foscus();
-    })
-    useEffect (()=>{
-        setErrMsg('');
-    },[email,password])
-*/
+    
     return (
         
         <section>
@@ -44,7 +34,9 @@ function Register () {
                 </div>
                 <button className="login_btn">Sign Up</button>
                 <div className="device">
-                    <p>or</p>
+                    <span></span>
+                    <p>or continue with</p>
+                    <span></span>
                 </div>
                 <button className="google_btn">
                     <img src="https://cdn6.agoda.net/images/universal-login/google-logo-v2.svg"></img>
