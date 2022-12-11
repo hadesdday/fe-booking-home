@@ -1,0 +1,115 @@
+section{
+    background-color: rgb(172, 172, 48);
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+}
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: white;
+
+}
+.container_left{
+    margin-top: 40px;
+    width: 450px;
+    margin-right: 30px;
+}
+.container_left input{
+    width: 450px;
+    height: 38px;
+    margin-top: -20px;
+    margin-bottom: 20px;
+}
+.container_left p{
+    color: black;
+    font-size: 12px;
+}
+.login_btn{
+    width: 450px;
+    height: 45px;
+    border: none;
+    background-color: rgb(83,146,249);
+    color: white;
+    border-radius: 5px;
+}
+.link{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    
+}
+.device_login{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.device_login span{
+    width: 150px;
+    height: 1px;
+    background-color: rgb(196, 196, 196);
+}
+.device_login p{
+    margin: 0px 4px 1px 4px;
+}
+.google_btn{
+    width: 450px;
+    height: 45px;
+    border-color: rgb(83,146,249);
+    background-color: white;
+    color: rgb(83,146,249);
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 5px;
+    border-style: solid;
+    margin-bottom: 10px;
+}
+button img{
+    margin-right: 10px;
+}
+.signup_other{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.facebook_btn{
+    height: 45px;
+    width: 200px;
+    border-color: rgb(83,146,249);
+    color: rgb(83,146,249);
+    background-color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 50px;
+}
+.apple_btn{
+    height: 45px;
+    width: 200px;
+    border-color: rgb(83,146,249);
+    color: rgb(83,146,249);
+    background-color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.container_right{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 50px;
+    margin-left: 50px;
+}
+.container_right ul li{
+    list-style: none;
+}
