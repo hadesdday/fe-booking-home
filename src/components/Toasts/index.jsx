@@ -16,7 +16,6 @@ function Toasts(props) {
                 pauseOnHover
                 theme="light"
             />
-            <ToastContainer />
         </>
     );
 }

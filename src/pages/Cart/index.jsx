@@ -56,7 +56,6 @@ function Cart(props) {
 
     return (
         <>
-            {/* container d-flex mt-5 gx-5 w-75 */}
             <div className="bg-cart">
                 <div className="container p-5 bg-cart">
                     <div className="row w-100 g-0">

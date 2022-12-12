@@ -13,7 +13,6 @@ import Pic6 from "../../assets/location/pic6.jpg";
 import Pic7 from "../../assets/location/pic7.jpg";
 import Pic8 from "../../assets/location/pic8.jpg";
 import Pic9 from "../../assets/location/pic9.png";
-import Toasts from '../../components/Toasts';
 import { AppContext } from '../../context/AppContext';
 import { toastSuccess } from '../../services/ToastService';
 import { Formatter } from '../../utils/MoneyFormatter';
@@ -262,7 +261,6 @@ function HomeDetails(props) {
 
     return (
         <>
-            <Toasts />
             <nav className={`navbar navbar-expand-lg position-sticky top-0 bg-white  border-bottom border-dark ${(!showNav || showContact || showReport) ? "" : "z-200"} ${(!showNav) ? "d-none" : ""}`}>
                 <div className="container">
                     <ul className="navbar-nav p-3 mt-0">
