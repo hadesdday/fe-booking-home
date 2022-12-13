@@ -120,6 +120,47 @@
   background-color: #d5d9e2 !important;
 }
 
+.bg-light-green {
+  background: #f3f9f2;
+}
+
+.fs-70 {
+  font-size: 70%;
+}
+
+.mx-wh-30 {
+  max-width: 30px;
+  max-height: 30px;
+}
+
+.fs-smaller {
+  font-size: smaller;
+}
+
+.fs-7 {
+  font-size: 0.9em;
+}
+
+.mh-400 {
+  max-height: 400px;
+}
+
+.btn__main {
+  background-color: $main-color;
+  transition: all ease 0.3s;
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.w-40 {
+  width: 40%;
+}
+
+.bg-gray {
+  background-color: #f8f5f5 !important;
+}
+
 #scrollToTop {
   display: inline-block;
   background-color: #212121;
@@ -140,6 +181,7 @@
     font-size: 180%;
   }
 }
+
 #scrollToTop::after {
   font-weight: normal;
   font-style: normal;
@@ -157,4 +199,8 @@
 #scrollToTop.show {
   opacity: 1;
   visibility: visible;
+}
+
+//mobile
+@media screen and (max-width: 600px) {
 }
