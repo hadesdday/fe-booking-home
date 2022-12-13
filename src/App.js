@@ -5,6 +5,7 @@ import Toasts from "./components/Toasts";
 import AppProvider from "./context/AppContext";
 import Login from "./pages/Account/Login";
 import Register from "./pages/Account/Register";
+import Overview from "./pages/Listing/Overview";
 import ResetPassword from "./pages/Account/ResetPassword";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
@@ -51,6 +52,7 @@ function App() {
             <Route path="Login" element={<Login />} />
             <Route path="Register" element={<Register />} />
             <Route path="ResetPassword" element={<ResetPassword />} />
+            <Route path="Overview" element={<Overview />} />
             <Route path="/home/details/:id" element={<HomeDetails />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
