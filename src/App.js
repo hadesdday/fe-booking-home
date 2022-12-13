@@ -13,6 +13,7 @@ import Home from "./pages/Home";
 import HomeDetails from "./pages/HomeDetails";
 import Footer from "./parts/Footer";
 import Header from "./parts/Header";
+import Payment from "./pages/Payment";
 function App() {
   const [visible, setVisible] = useState(false);
 
@@ -56,6 +57,7 @@ function App() {
             <Route path="/home/details/:id" element={<HomeDetails />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/checkout/payment" element={<Payment />} />
           </Routes>
           <Footer />
         </AppProvider>
