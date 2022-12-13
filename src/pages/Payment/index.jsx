@@ -1,15 +1,16 @@
 import React, { useContext } from 'react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import SelectSearch from 'react-select-search';
-import 'react-select-search/style.css'
+import 'react-select-search/style.css';
 import { AppContext } from '../../context/AppContext';
 import { COUNTRY_LIST } from '../../utils/CountryList';
 import { getDateRangeInPlainWithMonth, getNightNumber } from "../../utils/DateUtils";
-import { Formatter } from '../../utils/MoneyFormatter';
+import { Formatter } from "../../utils/MoneyFormatter";
+import VisaIcon from "../../assets/icon/ic_visa.png";
+import AmericanExpress from "../../assets/icon/ic_americanexpress.png";
+import MasterIcon from "../../assets/icon/ic_master.png";
 import "./styles.scss";
+import { Link } from 'react-router-dom';
 
-function Checkout(props) {
+function Payment(props) {
     const { selectedDayRange, home, country, setCountry } = useContext(AppContext);
     const countryObject = COUNTRY_LIST.find(a => a.value === country);
     const night = getNightNumber(selectedDayRange);
@@ -18,59 +19,43 @@ function Checkout(props) {
         <>
             <div className="position-relative m-4">
                 <div className="progress" style={{ height: "1px" }}>
-                    <div className="progress-bar" role="progressbar" aria-label="Progress" style={{ width: "0" }} aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div className="progress-bar" role="progressbar" aria-label="Progress" style={{ width: "50%" }} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
                 <button type="button" className="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill" style={{ width: "2rem", height: "2rem" }}>1</button>
-                <button type="button" className="position-absolute top-0 start-50 translate-middle btn btn-sm btn-secondary rounded-pill" style={{ width: "2rem", height: "2rem" }}>2</button>
+                <button type="button" className="position-absolute top-0 start-50 translate-middle btn btn-sm btn-primary rounded-pill" style={{ width: "2rem", height: "2rem" }}>2</button>
                 <button type="button" className="position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill" style={{ width: "2rem", height: "2rem" }}><i className='bx bx-check fw-bold'></i></button>
-                <p className='mt-3'>Customer information</p>
+                <div className="row">
+                    <div className="col-4 text-start">
+                        <p className='mt-3'>Customer information</p>
+                    </div>
+                    <div className="col-4 text-center">
+                        <p className='mt-3'>Payment</p>
+                    </div>
+                </div>
             </div>
-            {/* start container */}
             <div className="container-fluid bg-gray">
                 <div className="container pt-5 bg-gray">
                     <div className="row w-100 gy-2">
-                        <div className="col-md-7 bx__shadow m-1 rounded-1 mh-400 bg-white mt-2">
-                            <div className="row mt-3">
-                                <h6 className='fw-semibold'>Contact details</h6>
-                                <p className="mt-3">
-                                    This is your information will be sent
-                                </p>
-                            </div>
-                            <div className="row mt-3 g-2">
-                                <div className="col">
-                                    <label htmlFor="first__name">First name</label>
-                                    <div className="input-group">
-                                        <input type="text" className="form-control p-2" id='first__name' placeholder='First name' name='first__name' />
-                                    </div>
+                        <div className="col-md-7 bx__shadow m-1 rounded-1 mh-300 bg-white mt-2">
+                            <div className="row bg-main rounded-top">
+                                <div className="col-6">
+                                    <p className="text-white pt-3">CREDIT/DEBIT CARD</p>
                                 </div>
-                                <div className="col">
-                                    <label htmlFor="last__name">Last name</label>
-                                    <div className="input-group">
-                                        <input type="text" className="form-control p-2" id='last__name' placeholder='Last name' name='last__name' />
-                                    </div>
+                                <div className="col-6 text-end">
+                                    <img src={VisaIcon} alt="" width={50} className="m-2" />
+                                    <img src={AmericanExpress} alt="" width={50} className="m-2" />
+                                    <img src={MasterIcon} alt="" width={50} className="m-2" />
                                 </div>
                             </div>
-                            <div className="row mt-3 g-2">
-                                <div className="col">
-                                    <label htmlFor="email">Email</label>
-                                    <div className="input-group">
-                                        <input type="text" className="form-control p-2" id='email' placeholder='Email' name='email' />
-                                    </div>
-                                </div>
-                                <div className="col">
-                                    <label htmlFor="country">Country/region of residence</label>
-                                    <SelectSearch options={COUNTRY_LIST} value={country} onChange={setCountry} name="country" placeholder="Choose your country" search />
-                                </div>
+                            <div className="row m-1 mt-3">
+                                <p className='p-0 mb-1'>Select payment method <span className='text-danger'>*</span></p>
+                                <select class="form-select" aria-label="Choose payment method">
+                                    <option value="vnpay" selected>VNPAY</option>
+                                </select>
                             </div>
-                            <div className="row mt-3 g-2">
-                                <label htmlFor="phone__num">Mobile number</label>
-                                <div className="input-group mb-4">
-                                    <input type="tel" className="form-control p-2" id='phone__num' placeholder='Mobile Number' name='phone__num' />
-                                </div>
-                            </div>
-                            <div className="row justify-content-end hide-mobile">
-                                <Link to={"/checkout/payment"} className="text-center btn__main text-white rounded-2 p-3 px-2 mt-3 bx__shadow w-40">Continue to payment</Link>
-                            </div>
+                            <div className="row justify-content-end m-2">
+                                <Link to={"/checkout/payment"} className="text-center btn__main text-white rounded-2 p-3 px-2 mt-3 bx__shadow w-40">PAY NOW</Link>
+                          </div>
                         </div>
                         <div className="col-md-4 m-2">
                             <div className="row border rounded-2 bg-white">
@@ -198,4 +183,4 @@ function Checkout(props) {
     );
 }
 
-export default Checkout;
+export default Payment;

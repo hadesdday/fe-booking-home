@@ -35,6 +35,7 @@ function AppProvider({ children }) {
     });
 
     const [showOverlay, setShowOverlay] = useState(false);
+    const [country, setCountry] = useState("");
 
     return (
         <AppContext.Provider value={{
@@ -47,7 +48,9 @@ function AppProvider({ children }) {
             setSelectedDay,
             setHome,
             showOverlay,
-            setShowOverlay
+            setShowOverlay,
+            country,
+            setCountry
         }}>
             {children}
         </AppContext.Provider>
