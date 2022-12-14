@@ -1,0 +1,220 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.profile_container{
+    background-color: rgb(252,252,252);
+    font-size: 14px;
+    display: flex;
+    flex-direction: row;
+}
+.list_head_profile{
+    background-color: rgb(17,116,166);
+    width: 20%;
+    overflow: auto;
+    height: 1000px;
+}
+
+.list_head_profile ul{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 50px;
+}
+.list_head_profile ul li{
+    list-style: none;
+    color: white;
+    margin-bottom: 20px;
+}
+.list_head_profile ul li a{
+    color: white;
+}
+.profile_host{
+    width: 80%;
+    margin: 0% 5% 0% 5%;
+}
+.host_type{
+    padding-top: 30px;
+}
+.profile_title{
+    font-size: 16px;
+    font-weight: 600;
+}
+.host_type_box{
+    border: 1px solid rgb(218, 218, 218);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+}
+.host_own{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.host_own input{
+    margin: 3px 5px 0px 5px;
+}
+.host_own_title{
+    font-weight: 600;
+}
+.add_change_profile{
+    margin-top: 30px;
+}
+.add_change_profile h3{
+    font-size: 16px;
+    font-weight: 600;
+}
+.add_change_box{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    border: 1px solid rgb(218, 218, 218);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+}
+.add_change_box img{
+    width: 70px;
+    height: 70px;
+    border-radius: 50px;
+    margin: 0px 10px 0px 10px;
+    
+}
+.add_change_box p{
+    font-size: 12px;
+    margin-top: 10px;
+    margin-right: 20px;
+}
+.add_change_box button{
+    border: 1px solid rgb(17,116,166);
+    padding: 10px;
+    color:rgb(17,116,166);
+    background-color: white;
+    margin-left: 10%;
+    border-radius: 5px;
+}
+.profile_name_box{
+    border: 1px solid rgb(218, 218, 218);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+}
+.profile_name_box input{
+    height: 35px;
+    width: 270px;
+    border: 1px solid rgb(218, 218, 218);
+    border-radius: 5px;
+    margin-right: 10px;
+}
+.profile_box_title{
+    font-size: 13px;
+    font-weight: 600;
+}
+.profile_flex_name{
+    display: flex;
+    flex-direction: row;
+}
+.profile_contact_box{
+    border: 1px solid rgb(218, 218, 218);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+}
+.profile_contact_box input{
+    height: 35px;
+    width: 270px;
+    border: 1px solid rgb(218, 218, 218);
+    border-radius: 5px;
+    margin-right: 10px;
+}
+.profile_contact_box button{
+    background-color: rgb(17,116,166);
+    color: white;
+    border-style: hidden;
+    border-radius: 5px;
+    padding: 5px;
+}
+.profile_location_box{
+    border: 1px solid rgb(218, 218, 218);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+}
+.profile_location_box input{
+    height: 35px;
+    width: 270px;
+    border: 1px solid rgb(218, 218, 218);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+.profile_airbnb_link{
+    display: flex;
+    flex-direction: row;
+    border: 1px solid rgb(218, 218, 218);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+}
+.profile_airbnb_link input{
+    height: 35px;
+    width: 600px;
+}
+.profile_company_box{
+    border: 1px solid rgb(218, 218, 218);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+}
+.profile_company_box input{
+    height: 35px;
+    width: 270px;
+    border: 1px solid rgb(218, 218, 218);
+    border-radius: 5px;
+    margin-bottom: 10px;
+
+}
+.profile_ownerinfo_box{
+    border: 1px solid rgb(218, 218, 218);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+}
+.profile_ownerinfo_box input{
+    height: 35px;
+    width: 270px;
+    border: 1px solid rgb(218, 218, 218);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+.group_button{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.btn_cancel{
+    height: 40px;
+    width: 150px;
+    border: 1px solid rgb(17,116,166);
+    background-color: white;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+.btn_save{
+    height: 40px;
+    width: 150px;
+    border: 1px solid rgb(17,116,166);
+    background-color: rgb(17,116,166);
+    border-radius: 5px;
+    color: white;
+    margin-bottom: 20px;
+}

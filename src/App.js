@@ -5,7 +5,9 @@ import AppProvider from "./context/AppContext";
 import Login from "./pages/Account/Login";
 import Register from "./pages/Account/Register";
 import Overview from "./pages/Listing/Overview";
+import ListingHome from "./pages/Listing/ListingHome"
 import ResetPassword from "./pages/Account/ResetPassword";
+import Profile from "./pages/Listing/Profile";
 import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 import HomeDetails from "./pages/HomeDetails";
@@ -50,6 +52,8 @@ function App() {
             <Route path="Register" element={<Register />} />
             <Route path="ResetPassword" element={<ResetPassword />} />
             <Route path="Overview" element={<Overview />} />
+            <Route path="Profile" element={<Profile />} />
+            <Route path="ListingHome" element={<ListingHome />} />
             <Route path="/home/details/:id" element={<HomeDetails />} />
             <Route path="/cart" element={<Cart />} />
           </Routes>

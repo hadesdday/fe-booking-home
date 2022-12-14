@@ -27,6 +27,9 @@
     color: white;
     margin-bottom: 20px;
 }
+.list_head ul li a{
+    color: white;
+}
 .content_overview{
     margin-left: 40px;
     margin-top: 30px;
