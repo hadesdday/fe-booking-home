@@ -58,6 +58,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/checkout/payment" element={<Payment />} />
+            {/* <Route path="/search/" */}
           </Routes>
           <Footer />
         </AppProvider>

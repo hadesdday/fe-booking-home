@@ -9,7 +9,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import RecommendHome from '../../components/RecommendHome';
-
+import { Formatter } from '../../utils/MoneyFormatter';
 import Background from "../../assets/background.jpg";
 
 import Banner1 from "../../assets/promotion/banner1.png";
@@ -38,10 +38,11 @@ import Pic9 from "../../assets/location/pic9.png";
 import Home1 from "../../assets/home1.png";
 import Home2 from "../../assets/home2.jpg";
 
-import "./styles.scss";
-import RecommendPlaces from '../../components/RecommendPlaces';
 import { useContext } from 'react';
+import { getHotelList } from '../../api/hotel.api';
+import RecommendPlaces from '../../components/RecommendPlaces';
 import { AppContext } from '../../context/AppContext';
+import "./styles.scss";
 
 function Home(props) {
     const [option, setOption] = useState(0);
@@ -49,12 +50,20 @@ function Home(props) {
     const { featuredLocation, selectedDayRange, selectedDay,
         home, setFeaturedLocation, setSelectedDayRange, setSelectedDay, setHome } = useContext(AppContext);
 
-    console.log("over night ", selectedDayRange);
-    console.log("day use ", selectedDay);
-    console.log("home ", home);
+    const [recommendHomeList, setRecommendHomeList] = useState([]);
+
+    console.log(recommendHomeList);
+
+    // console.log("over night ", selectedDayRange);
+    // console.log("day use ", selectedDay);
+    // console.log("home ", home);
 
     useEffect(() => {
         const refetch = (() => {
+            getHotelList().then((res) => {
+                const { data } = res;
+                setRecommendHomeList(data.slice(0, 8));
+            });
             console.log("changed location", featuredLocation);
             return;
         });
@@ -373,14 +382,9 @@ function Home(props) {
             </div>
             <div className="featured__location__list container d-flex justify-content-center">
                 <div className="row w-95">
-                    <RecommendHome imgSrc={Home1} name="Nikko Apartments - The Classy Life" rating={5} location={`${featuredLocation}1`} price={623484} />
-                    <RecommendHome imgSrc={Home1} name="Nikko Apartments - The Classy Life" rating={4} location={`${featuredLocation}2`} price={623484} />
-                    <RecommendHome imgSrc={Home1} name="Nikko Apartments - The Classy Life" rating={3} location={`${featuredLocation}3`} price={623484} />
-                    <RecommendHome imgSrc={Home1} name="Nikko Apartments - The Classy Life" rating={2} location={`${featuredLocation}4`} price={623484} />
-                    <RecommendHome imgSrc={Home1} name="Nikko Apartments - The Classy Life" rating={2} location={`${featuredLocation}5`} price={623484} />
-                    <RecommendHome imgSrc={Home1} name="Nikko Apartments - The Classy Life" rating={2} location={`${featuredLocation}6`} price={623484} />
-                    <RecommendHome imgSrc={Home1} name="Nikko Apartments - The Classy Life" rating={2} location={`${featuredLocation}7`} price={623484} />
-                    <RecommendHome imgSrc={Home1} name="Nikko Apartments - The Classy Life" rating={2} location={`${featuredLocation}8`} price={623484} />
+                    {recommendHomeList.length > 0 && recommendHomeList.map((item) => (
+                        <RecommendHome key={item.id} imgSrc={item.image} name={item.name} rating={item.rating} location={item.province} price={item.price} id={item.id} />
+                    ))}
 
                     <div className="row justify-content-center mt-3">
                         <a href="" role={"button"} className="btn btn__more active w-25 p-2">See more ({featuredLocation}) properties</a>

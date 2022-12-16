@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function RecommendHome(props) {
-    const { imgSrc, name, price, location, rating } = props;
+    const { id, imgSrc, name, price, location, rating } = props;
 
     const formatter = new Intl.NumberFormat('vi-VN', {
         style: 'currency',
@@ -16,7 +16,7 @@ function RecommendHome(props) {
 
     return (
         <>
-            <Link to={"/home/details/1"} className="col-md-3 col-sm-12 p-1">
+            <Link to={`/home/details/${id}`} className="col-md-3 col-sm-12 p-1">
                 <div className="row">
                     <img src={imgSrc} alt="" className='w-95' />
                 </div>

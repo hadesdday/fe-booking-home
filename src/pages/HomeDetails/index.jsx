@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { FreeMode, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { getHotelDetails } from '../../api/hotel.api';
 import Image from "../../assets/home1.png";
 import Pic1 from "../../assets/location/pic1.jpg";
 import Pic2 from "../../assets/location/pic2.jpg";
@@ -29,9 +30,37 @@ function HomeDetails(props) {
 
     const { selectedDayRange, home, setSelectedDayRange, setHome, showOverlay, setShowOverlay } = useContext(AppContext);
 
+    const [hotel, setHotel] = useState({
+        images: []
+        , info: ""
+        , name: ""
+        , owner: {}
+        , place: {}
+        , policy: ""
+        , reviews: [],
+        rooms: []
+    });
+
     useEffect(() => {
         window.scrollTo(0, 0);
+        const fetchData = (() => {
+            getHotelDetails(id).then((res) => {
+                const { data } = res;
+                console.log(data);
+                setHotel(data);
+            });
+            return;
+        });
+        return () => {
+            fetchData();
+        };
     }, []);
+
+    const { images, info, name, owner, place, policy, reviews, rooms } = hotel;
+    const numberOfPeople = rooms.length > 0 && rooms.reduce((a, b) => ({ children: a.children + b.children, adult: a.adult + b.adult }));
+    const capacity = numberOfPeople && numberOfPeople.children + numberOfPeople.adult;
+
+    const avgRating = reviews.length > 0 && reviews.reduce((a, b) => (a.rate + b.rate)) / reviews.length;
 
     const renderCustomOnInput = ({ ref }) => (
         <div className="row" >
@@ -155,73 +184,21 @@ function HomeDetails(props) {
         document.body.style.overflow = "auto";
     }
 
-
-
     //this is sample data if db have data fetch from database
-    var pricePernight = 1234567;
+    var pricePernight = rooms[0]?.price;
     var price = pricePernight * getNightNumber(selectedDayRange);
-    var fee = 999999;
+    var fee = (price * 10) / 100;
     var priceBeforeTaxes = price + fee;
 
-    var description = "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem a at possimus minima quis? Obcaecati consequatur accusantium natus reprehenderit cum repellendus vero! Id, repellat accusantium! Doloremque, sunt placeat! Architecto, eveniet!Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem a at possimus minima quis? Obcaecati consequatur accusantium natus reprehenderit cum repellendus vero! Id, repellat accusantium! Doloremque, sunt placeat! Architecto, eveniet";
+    var shortDescription = info.substring(0, info.lastIndexOf(" ", 100));
 
-    var shortDescription = description.substring(0, description.lastIndexOf(" ", 100));
-
-    var amenities = ["Kitchen", "Wifi", "Dedicated workspace", "Free street parking", "Washer", "Air conditioning", "Refrigerator", "Long term stays allowed",
-        "Coffee maker", "Heating", "Private entrance", "Long term stays allowed", "Hangers", "Smoke alarm"];
-
-    var policies = ["No smoking", "No pets", "No parties or events", "Check-in is anytime after 3PM", "Check out by 11AM", "Self check-in with keypad"];
-
-    var reviews = [
-        {
-            "name": "Nguyễn Văn A0",
-            "avatar": "https://picsum.photos/150/150",
-            "date": "2021-05-01",
-            "content": "There was a bit of problem with the check-in, as the bnb location has been moved to a new address (about 3-4km away from the one showed on airbnb). But the rest was lovely. I stayed for 1 night right after the long Vietnamese holiday so it was rather quiet. Diep was very helpful, he got me dinner and helped me to rent a motorbike. They have really lovely dogs too."
-        },
-        {
-            "name": "Nguyễn Văn A1",
-            "avatar": "https://picsum.photos/151/150",
-            "date": "2021-05-01",
-            "content": "Good"
-        },
-        {
-            "name": "Nguyễn Văn A2",
-            "avatar": "https://picsum.photos/152/150",
-            "date": "2021-05-01",
-            "content": "Good"
-        },
-        {
-            "name": "Nguyễn Văn A3",
-            "avatar": "https://picsum.photos/153/150",
-            "date": "2021-05-01",
-            "content": "Good"
-        },
-        {
-            "name": "Nguyễn Văn A4",
-            "avatar": "https://picsum.photos/154/150",
-            "date": "2021-05-01",
-            "content": "Good"
-        },
-        {
-            "name": "Nguyễn Văn A5",
-            "avatar": "https://picsum.photos/155/150",
-            "date": "2021-05-01",
-            "content": "Good"
-        },
-        {
-            "name": "Nguyễn Văn A6",
-            "avatar": "https://picsum.photos/156/150",
-            "date": "2021-05-01",
-            "content": "Good"
-        },
-        {
-            "name": "Nguyễn Văn A7",
-            "avatar": "https://picsum.photos/157/150",
-            "date": "2021-05-01",
-            "content": "There was a bit of problem with the check-in, as the bnb location has been moved to a new address (about 3-4km away from the one showed on airbnb). But the rest was lovely. I stayed for 1 night right after the long Vietnamese holiday so it was rather quiet. Diep was very helpful, he got me dinner and helped me to rent a motorbike. They have really lovely dogs too."
-        },
-    ];
+    var amenities = [];
+    if (rooms.length > 0) {
+        rooms.map((item) => {
+            amenities.push(...item.facilities);
+        });
+    }
+    var policies = [policy];
 
     var locationArr = [];
 
@@ -284,13 +261,13 @@ function HomeDetails(props) {
             <div className={`container mt-5`}>
                 <div className="row">
                     <div className="row">
-                        <h2 className='fw-semibold'>Biệt thự sang trọng Sunset 3BR  có lối vào BÃI BIỂN</h2>
+                        <h2 className='fw-semibold'>{name}</h2>
                     </div>
                     <div className="row">
-                        <div className="col-sm-2 col-md-1"><i className='bx bxs-star'></i> <span className="fw-semibold">4,88</span></div>
+                        <div className="col-sm-2 col-md-1"><i className='bx bxs-star'></i> <span className="fw-semibold">{avgRating}</span></div>
                         <div className="col-sm-8 col-md-4">
-                            <a className='text-decoration-underline text-black fw-semibold pr-20' onClick={() => scrollToId("reviews")}>78 reviews</a>
-                            <a className='text-decoration-underline text-black fw-semibold'>Phu Quoc</a>
+                            <a className='text-decoration-underline text-black fw-semibold pr-20' onClick={() => scrollToId("reviews")}>{reviews.length} reviews</a>
+                            <a className='text-decoration-underline text-black fw-semibold'>{place.province}</a>
                         </div>
                     </div>
                     <div className="row mt-3" id='photos'>
@@ -306,33 +283,33 @@ function HomeDetails(props) {
                                 freeMode={true}
                                 modules={[Navigation, Pagination, FreeMode]} className="mobile__show">
                                 {
-                                    locationArr.map((item, index) =>
+                                    images.map((item, index) =>
                                         <SwiperSlide key={index}>
                                             <div className="row d-flex justify-content-center">
-                                                <img src={item} alt="" className='w-75 overlay__img' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
+                                                <img src={item.image} alt="" className='w-75 overlay__img' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
                                             </div>
                                         </SwiperSlide>)
                                 }
                             </Swiper>
                         </div>
                         <div className="col-md-6">
-                            <img src={Image} alt="" className='w-100 rounded-start hide__mobile c-pointer' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
+                            <img src={images[0]?.image} alt="" className='w-100 rounded-start hide__mobile c-pointer mh-415' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
                         </div>
                         <div className="col-md-6">
                             <div className="row pb-3">
                                 <div className="col-md-6">
-                                    <img src={Image} alt="" className='w-100 hide__mobile c-pointer' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
+                                    <img src={images[1]?.image} alt="" className='w-100 hide__mobile c-pointer mh-200' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
                                 </div>
                                 <div className="col-md-6">
-                                    <img src={Image} alt="" className='w-100 rounded-end hide__mobile c-pointer' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
+                                    <img src={images[2]?.image} alt="" className='w-100 rounded-end hide__mobile c-pointer mh-200' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="col-md-6">
-                                    <img src={Image} alt="" className='w-100 hide__mobile c-pointer' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
+                                    <img src={images[3]?.image} alt="" className='w-100 hide__mobile c-pointer mh-200' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
                                 </div>
                                 <div className="col-md-6">
-                                    <img src={Image} alt="" className='w-100 rounded-end hide__mobile c-pointer' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
+                                    <img src={images[4]?.image} alt="" className='w-100 rounded-end hide__mobile c-pointer mh-200' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
                                 </div>
                             </div>
                         </div>
@@ -343,9 +320,9 @@ function HomeDetails(props) {
                                 <div className="col-md-10">
                                     <div className="row">
                                         <h5 className="fw-semibold">
-                                            Homestay hosted by Hieu Nguyen
+                                            Homestay hosted by {owner.name}
                                         </h5>
-                                        <p>6 guests, 1 bedroom, 3 beds, 1 bath</p>
+                                        <p>{capacity} guests</p>
                                     </div>
                                 </div>
                                 <div className="col-md-2">
@@ -382,7 +359,7 @@ function HomeDetails(props) {
                             {/* divider component */}
                             <div className="border-bottom w-95 p-2"></div>
                             <div className="row mt-4 p-3">
-                                {shorten ? description : shortDescription + "..."}
+                                {shorten ? info : shortDescription + "..."}
                                 <p className={`text-decoration-underline text-black fw-semibold p-0 mt-3 c-pointer ${shorten && "d-none"}`} onClick={() => setShorten(true)}>Show more</p>
                             </div>
 
@@ -391,23 +368,23 @@ function HomeDetails(props) {
                             <div className="border-bottom w-95 p-2"></div>
                             <div className="row mt-4 p-3" id='amenities'>
                                 <h3 className='fw-semibold mb-4'>What this place offers</h3>
-                                {amenities.slice(0, 10).map((item, index) => (
+                                {amenities && amenities.slice(0, 10).map((item, index) => (
                                     <div className="col-6" key={index}>
                                         <div className="row">
                                             <div className="col-1"><i className='bx bx-like fs-180'></i></div>
                                             <div className="col-11">
-                                                <p className="fw-semibold p-1">{item}</p>
+                                                <p className="fw-semibold p-1">{item.facility.name}</p>
                                             </div>
                                         </div>
                                     </div>
                                 ))}
                                 {
-                                    shortenAmenities && amenities.slice(10, amenities.length).map((item, index) => (
+                                    (amenities && shortenAmenities) && amenities.slice(10, amenities.length).map((item, index) => (
                                         <div className="col-6" key={index}>
                                             <div className="row">
                                                 <div className="col-1"><i className='bx bx-like fs-180'></i></div>
                                                 <div className="col-11">
-                                                    <p className="fw-semibold p-1">{item}</p>
+                                                    <p className="fw-semibold p-1">{item.facility.name}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -438,8 +415,8 @@ function HomeDetails(props) {
                                 </div>
                                 <div className="col-6 text-end">
                                     <p>
-                                        <i className='bx bxs-star'></i> <span className='mr-15'>5.0</span>
-                                        <a href="#review" className='text-decoration-underline text-muted'> 14 reviews</a>
+                                        <i className='bx bxs-star'></i> <span className='mr-15'>{avgRating}</span>
+                                        <a href="#review" className='text-decoration-underline text-muted'> {reviews.length} reviews</a>
                                     </p>
                                 </div>
                             </div>
@@ -551,18 +528,18 @@ function HomeDetails(props) {
                         {/* divider component */}
                         <div className="border-bottom w-95 p-2"></div>
                         <div className="row mt-4 p-3" id='reviews'>
-                            <h3 className='fw-semibold mb-4'><i className='bx bxs-star'></i> 5.0, {reviews.length} Reviews</h3>
+                            <h3 className='fw-semibold mb-4'><i className='bx bxs-star'></i> {avgRating}, {reviews.length} Reviews</h3>
 
                             <div className="row gx-5">
                                 {!shortenReviews ? reviews.slice(0, 6).map((item, index) => (
                                     <div className="col-6" key={index}>
                                         <div className="row">
                                             <div className="col-1">
-                                                <img src={item.avatar} alt="" className='mini__avatar rounded-circle' />
+                                                <img src={"https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="} alt="" className='mini__avatar rounded-circle' />
                                             </div>
                                             <div className="col-11">
-                                                <p className="fw-semibold m-0">{item.name}</p>
-                                                <p className='text-muted'>{item.date}</p>
+                                                <p className="fw-semibold m-0">{item.username}</p>
+                                                <p className='text-muted'>2022</p>
                                             </div>
                                         </div>
                                         <div className="row mb-3">
@@ -579,11 +556,11 @@ function HomeDetails(props) {
                                         <div className="col-6" key={index}>
                                             <div className="row">
                                                 <div className="col-1">
-                                                    <img src={item.avatar} alt="" className='mini__avatar rounded-circle' />
+                                                    <img src={"https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="} alt="" className='mini__avatar rounded-circle' />
                                                 </div>
                                                 <div className="col-11">
-                                                    <p className="fw-semibold m-0">{item.name}</p>
-                                                    <p className='text-muted'>{item.date}</p>
+                                                    <p className="fw-semibold m-0">{item.username}</p>
+                                                    <p className='text-muted'>2022</p>
                                                 </div>
                                             </div>
                                             <div className="row mb-3">
@@ -642,7 +619,7 @@ function HomeDetails(props) {
                             <div className="row p-4">
                                 <h4 className="fw-semibold">Host Information</h4>
                                 <a href='mailto:gotrip@gmail.com' className='text-black fs-5'><i className='bx bx-envelope'></i> gotrip@gmail.com</a>
-                                <a href='tel:0987654321' className='text-black fs-5'><i className='bx bx-phone'></i> 0987654432</a>
+                                <a href={`tel:${owner.phone}`} className='text-black fs-5'><i className='bx bx-phone'></i> {owner.phone}</a>
                             </div>
                         </div>
                     </div>
