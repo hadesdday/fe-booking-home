@@ -8,7 +8,7 @@ function Overview(){
             <ul>
                 <li>
                     <i></i>
-                    OverView
+                    <a href="/Profile">OverView</a>
                 </li>
                 <li>
                     <i></i>
@@ -29,7 +29,8 @@ function Overview(){
             <div className="profile">
                 <img src="https://tse2.mm.bing.net/th?id=OIP.zl_Nch6D6OfZLqxf302AhgHaHw&pid=Api&P=0" alt="profile_logo" />
                 <p>Wellcome back, <span>Hiep!</span></p>
-                <button>Edit Your Profile</button>
+                <a href="/Profile"><button>Edit Your Profile</button></a>
+                
             </div>
             <div className="profile_content">
                 <p className="profile_title">To become a verified host, complete the steps below:</p>
@@ -37,22 +38,24 @@ function Overview(){
                     <div className="editprofile_box">
                         <p className="profile_box_title">your name</p>
                         <p className="profile_box_content">first name, last name</p>
-                        <button>edit name</button>
+                        <a href="/Profile"><button>edit name</button></a>                     
                     </div>
                     <div className="editprofile_box">
                         <p className="profile_box_title">Photo</p>
                         <p className="profile_box_content">upload your profile photo</p>
-                        <button>upload now</button>
+                        <a href="/Profile"><button>upload now</button></a>                    
                     </div>
                     <div className="editprofile_box">
                         <p className="profile_box_title">email</p>
                         <p className="profile_box_content">verify your email</p>
-                        <button>verify now</button>
+                        <a href="/Profile"><button>verify now</button></a>
+                        
                     </div>
                     <div className="editprofile_box">
                         <p className="profile_box_title">phone number</p>
                         <p className="profile_box_content">verify your phone number</p>
-                        <button>add your phone number</button>
+                        <a href="/Profile"><button>add your phone number</button></a>
+                        
                     </div>
                 </div>
             </div>
