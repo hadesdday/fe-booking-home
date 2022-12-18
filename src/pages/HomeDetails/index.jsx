@@ -3,8 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { FreeMode, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { getHotelDetails } from '../../api/hotel.api';
-import Image from "../../assets/home1.png";
+import { addToCart, getHotelDetails } from '../../api/hotel.api';
 import Pic1 from "../../assets/location/pic1.jpg";
 import Pic2 from "../../assets/location/pic2.jpg";
 import Pic3 from "../../assets/location/pic3.jpg";
@@ -15,7 +14,8 @@ import Pic7 from "../../assets/location/pic7.jpg";
 import Pic8 from "../../assets/location/pic8.jpg";
 import Pic9 from "../../assets/location/pic9.png";
 import { AppContext } from '../../context/AppContext';
-import { toastSuccess } from '../../services/ToastService';
+import { toastError, toastSuccess } from '../../services/ToastService';
+import { deserializeDayToString, getDateRangeInPlainWithMonth, getNightNumber } from '../../utils/DateUtils';
 import { Formatter } from '../../utils/MoneyFormatter';
 import "./styles.scss";
 
@@ -28,7 +28,8 @@ function HomeDetails(props) {
     const [showContact, setShowContact] = useState(false);
     const [showReport, setShowReport] = useState(false);
 
-    const { selectedDayRange, home, setSelectedDayRange, setHome, showOverlay, setShowOverlay } = useContext(AppContext);
+    const { selectedDayRange, home, setSelectedDayRange, setHome,
+        showOverlay, setShowOverlay, onChangePeople, setRoomValue, setAdultsValue, setChildValue } = useContext(AppContext);
 
     const [hotel, setHotel] = useState({
         images: []
@@ -43,8 +44,8 @@ function HomeDetails(props) {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        const fetchData = (() => {
-            getHotelDetails(id).then((res) => {
+        const fetchData = (async () => {
+            await getHotelDetails(id).then((res) => {
                 const { data } = res;
                 console.log(data);
                 setHotel(data);
@@ -60,7 +61,11 @@ function HomeDetails(props) {
     const numberOfPeople = rooms.length > 0 && rooms.reduce((a, b) => ({ children: a.children + b.children, adult: a.adult + b.adult }));
     const capacity = numberOfPeople && numberOfPeople.children + numberOfPeople.adult;
 
-    const avgRating = reviews.length > 0 && reviews.reduce((a, b) => (a.rate + b.rate)) / reviews.length;
+    let avgRating = 0;
+    if (reviews.length > 0) {
+        reviews.map((i) => avgRating += i.rate);
+        avgRating = avgRating / reviews.length;
+    }
 
     const renderCustomOnInput = ({ ref }) => (
         <div className="row" >
@@ -74,96 +79,12 @@ function HomeDetails(props) {
                     type="text"
                     className='form-control input__date c-default'
                     placeholder='Choose your day'
-                    value={getDateRangeInString(selectedDayRange)}
+                    value={getDateRangeInPlainWithMonth(selectedDayRange)}
                     id="input__date"
                 />
             </div>
         </div>
     )
-
-    function getNightNumber(input) {
-        if (input.from && input.to) {
-            const { from, to } = input;
-            const fromString = from.month + "/" + from.day + "/" + from.year;
-            const toString = to.month + "/" + to.day + "/" + to.year;
-            const date1 = new Date(fromString);
-            const date2 = new Date(toString);
-            const diffTime = Math.abs(date2 - date1);
-            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            if (diffDays < 1) diffDays = 1;
-            return diffDays;
-        } else {
-            return 1;
-        }
-    }
-
-    function getDateRangeInString(input) {
-        if (input.from && input.to) {
-            const { from, to } = input;
-            const fromString = from.year + "/" + from.month + "/" + from.day;
-            const toString = to.year + "/" + to.month + "/" + to.day;
-            return fromString + " - " + toString;
-        } else {
-            return "";
-        }
-    }
-
-    function onChangePeople(event) {
-        var target = event.target;
-        var name = target.name;
-        var value = target.value;
-
-        if (value < 0) {
-            if (name === "child") {
-                value = 0;
-            } else {
-                value = 1;
-            }
-        }
-
-        setHome((prevValue) => {
-            return {
-                ...prevValue,
-                [name]: value
-            }
-        })
-    }
-
-    function setRoomValue(value) {
-        if (value < 1) {
-            value = 1;
-        }
-        setHome((prev) => {
-            return {
-                ...prev,
-                "room": value
-            }
-        })
-    }
-
-    function setAdultsValue(value) {
-        if (value < 1) {
-            value = 1;
-        }
-        setHome((prev) => {
-            return {
-                ...prev,
-                "adults": value
-            }
-        })
-    }
-
-    function setChildValue(value) {
-        if (value < 0) {
-            value = 0;
-        }
-        setHome((prev) => {
-            return {
-                ...prev,
-                "child": value
-            }
-        })
-    }
 
     function scrollToId(id) {
         document.getElementById(id).scrollIntoView({
@@ -184,7 +105,6 @@ function HomeDetails(props) {
         document.body.style.overflow = "auto";
     }
 
-    //this is sample data if db have data fetch from database
     var pricePernight = rooms[0]?.price;
     var price = pricePernight * getNightNumber(selectedDayRange);
     var fee = (price * 10) / 100;
@@ -192,12 +112,12 @@ function HomeDetails(props) {
 
     var shortDescription = info.substring(0, info.lastIndexOf(" ", 100));
 
-    var amenities = [];
-    if (rooms.length > 0) {
-        rooms.map((item) => {
-            amenities.push(...item.facilities);
-        });
-    }
+    var amenities = ["No"];
+    // if (rooms.length > 0) {
+    //     rooms.map((item) => {
+    //         amenities.push(...item.facilities);
+    //     });
+    // }
     var policies = [policy];
 
     var locationArr = [];
@@ -234,6 +154,27 @@ function HomeDetails(props) {
         setShowReport(false);
         enableScrollbar();
         toastSuccess("Reported successfully");
+    }
+
+    function onAddToCart() {
+        const data = {
+            hotelId: Number(id),
+            sessionId: sessionStorage.getItem("sessionId") !== null ? sessionStorage.getItem("sessionId") : "",
+            fromDate: deserializeDayToString(selectedDayRange.from),
+            toDate: deserializeDayToString(selectedDayRange.to),
+            adult: home.adults,
+            children: home.child
+        };
+        addToCart(data)
+            .then((res) => {
+                if (res.status === 200) {
+                    toastSuccess("Added to cart successfully");
+                    sessionStorage.setItem("sessionId", res.data);
+                }
+            })
+            .catch(function (err) {
+                toastError(err.response.data);
+            })
     }
 
     return (
@@ -373,7 +314,7 @@ function HomeDetails(props) {
                                         <div className="row">
                                             <div className="col-1"><i className='bx bx-like fs-180'></i></div>
                                             <div className="col-11">
-                                                <p className="fw-semibold p-1">{item.facility.name}</p>
+                                                <p className="fw-semibold p-1">{item}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -384,7 +325,7 @@ function HomeDetails(props) {
                                             <div className="row">
                                                 <div className="col-1"><i className='bx bx-like fs-180'></i></div>
                                                 <div className="col-11">
-                                                    <p className="fw-semibold p-1">{item.facility.name}</p>
+                                                    <p className="fw-semibold p-1">{item}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -495,7 +436,7 @@ function HomeDetails(props) {
                             </div>
                             <div className="row p-3">
                                 <button className="btn btn__reserve text-white fw-semibold p-3">Reserve</button>
-                                <button className="btn btn__add__cart fw-semibold p-3 mt-4" onClick={() => toastSuccess("Add to cart successfully")}>Add to cart</button>
+                                <button className="btn btn__add__cart fw-semibold p-3 mt-4" onClick={onAddToCart}>Add to cart</button>
                             </div>
                             <div className="row p-3">
                                 <div className="col">
@@ -539,7 +480,7 @@ function HomeDetails(props) {
                                             </div>
                                             <div className="col-11">
                                                 <p className="fw-semibold m-0">{item.username}</p>
-                                                <p className='text-muted'>2022</p>
+                                                <p className='text-muted'>Anonymous User</p>
                                             </div>
                                         </div>
                                         <div className="row mb-3">

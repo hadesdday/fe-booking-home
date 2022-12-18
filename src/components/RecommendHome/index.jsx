@@ -2,23 +2,32 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function RecommendHome(props) {
-    const { id, imgSrc, name, price, location, rating } = props;
+    const { id, images, name, price, location, reviews, rooms } = props;
 
     const formatter = new Intl.NumberFormat('vi-VN', {
         style: 'currency',
         currency: 'VND',
     });
 
+    let totalRating = 0;
+    if (reviews.length > 0) {
+        reviews.map((i) => totalRating += i.rate);
+        totalRating = totalRating / reviews.length;
+    }
+
     var ratingElements = [];
-    for (let i = 1; i <= Number(rating); i++) {
+    for (let i = 1; i <= Number(totalRating); i++) {
         ratingElements.push(<i key={i} className='bx bxs-star cl-pink'></i>);
     }
+
+    const priceArray = Object.values(rooms).map(({ price }) => price);
+    const minPrice = Math.min(...priceArray);
 
     return (
         <>
             <Link to={`/home/details/${id}`} className="col-md-3 col-sm-12 p-1">
                 <div className="row">
-                    <img src={imgSrc} alt="" className='w-95' />
+                    <img src={images[0].image} alt="" className='w-95' />
                 </div>
                 <div className="row">
                     <h6 className='fw-semibold text-black'>{name}</h6>
@@ -32,7 +41,7 @@ function RecommendHome(props) {
                 </div>
                 <div className="row">
                     <p className='text-danger fw-bold cl-red'>
-                        {formatter.format(price)}
+                        {formatter.format(minPrice)}
                     </p>
                 </div>
             </Link>

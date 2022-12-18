@@ -12,3 +12,11 @@ export const getHotelList = () => {
 export const getHotelDetails = (id) => {
   return axiosService.get(`${BASE_URL}/${id}`);
 };
+
+export const addToCart = (data) => {
+  return axiosService.post(`${API_ENDPOINT}/${HOTEL.ADD_TO_CART}`, data);
+};
+
+export const getCart = (sessionId) => {
+  return axiosService.get(`${API_ENDPOINT}/${HOTEL.GET_CART}/${sessionId}`);
+};
