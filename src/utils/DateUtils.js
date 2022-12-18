@@ -25,6 +25,15 @@ export const getNightNumber = (input) => {
   }
 };
 
+export const deserializeDayToString = (input) => {
+  if (input) {
+    const { day, month, year } = input;
+    return year + "/" + month + "/" + day;
+  } else {
+    return "";
+  }
+};
+
 export const getDateRangeInPlainWithMonth = (input) => {
   if (input.from && input.to) {
     const { from, to } = input;

@@ -48,7 +48,10 @@ function Home(props) {
     const [option, setOption] = useState(0);
 
     const { featuredLocation, selectedDayRange, selectedDay,
-        home, setFeaturedLocation, setSelectedDayRange, setSelectedDay, setHome } = useContext(AppContext);
+        home, setFeaturedLocation, setSelectedDayRange, setSelectedDay, setHome, onChangePeople,
+        setRoomValue,
+        setAdultsValue,
+        setChildValue } = useContext(AppContext);
 
     const [recommendHomeList, setRecommendHomeList] = useState([]);
 
@@ -126,62 +129,6 @@ function Home(props) {
         <li className={`p-3 border-bottom recommend__location ${featuredLocation === location && "active"}`} onClick={() => setFeaturedLocation(location)}>{location}</li>
     );
 
-    function onChangePeople(event) {
-        var target = event.target;
-        var name = target.name;
-        var value = target.value;
-
-        if (value < 0) {
-            if (name === "child") {
-                value = 0;
-            } else {
-                value = 1;
-            }
-        }
-
-        setHome((prevValue) => {
-            return {
-                ...prevValue,
-                [name]: value
-            }
-        })
-    }
-
-    function setRoomValue(value) {
-        if (value < 1) {
-            value = 1;
-        }
-        setHome((prev) => {
-            return {
-                ...prev,
-                "room": value
-            }
-        })
-    }
-
-    function setAdultsValue(value) {
-        if (value < 1) {
-            value = 1;
-        }
-        setHome((prev) => {
-            return {
-                ...prev,
-                "adults": value
-            }
-        })
-    }
-
-    function setChildValue(value) {
-        if (value < 0) {
-            value = 0;
-        }
-        setHome((prev) => {
-            return {
-                ...prev,
-                "child": value
-            }
-        })
-    }
 
     var bannerArr = [];
     var locationArr = [];
@@ -383,7 +330,7 @@ function Home(props) {
             <div className="featured__location__list container d-flex justify-content-center">
                 <div className="row w-95">
                     {recommendHomeList.length > 0 && recommendHomeList.map((item) => (
-                        <RecommendHome key={item.id} imgSrc={item.image} name={item.name} rating={item.rating} location={item.province} price={item.price} id={item.id} />
+                        <RecommendHome key={item.id} images={item.images} name={item.name} reviews={item.reviews} location={item.place.province} price={item.price} id={item.id} rooms={item.rooms} />
                     ))}
 
                     <div className="row justify-content-center mt-3">
