@@ -1,0 +1,139 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.listing_details_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+.listing_details_head{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-left: 150px;
+}
+.Listing_Details_title{
+    font-size: 24px;
+    font-weight: 600;
+    margin-left: 150px;
+    margin-top: 30px;
+}
+.listing_property{
+    border: 1px solid rgb(189, 189, 189);
+    padding: 20px;
+    margin-left: 150px;
+    border-radius: 5px;
+    width: 60%;
+}
+.listing_property ul{
+    display: flex;
+    flex-direction:row ;
+    justify-content: center;
+    align-items: center;
+}
+.listing_property h4{
+    font-size: 18px;
+    font-weight: 600;
+}
+.listing_property ul li{
+    display: flex;
+    flex-direction:column ;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(189, 189, 189);
+    height: 100px;
+    width: 150px;
+    padding: 10px;
+    margin-right: 20px;
+    border-radius: 5px;
+}
+.listing_room{
+    border: 1px solid rgb(189, 189, 189);
+    padding: 20px;
+    margin-left: 150px;
+    border-radius: 5px;
+    width: 60%;
+}
+.listing_room h3{
+    font-size: 18px;
+    font-weight: 600;
+}
+.listing_room p{
+    margin-bottom: 0px;
+}
+.listing_room input{
+    margin-top: 10px;
+    margin-bottom: 20px;
+    height: 35px;
+    width: 400px;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+.listing_loaction{
+    border: 1px solid rgb(189, 189, 189);
+    padding: 20px;
+    margin-left: 150px;
+    border-radius: 5px;
+    width: 60%;
+}
+.listing_loaction input{
+    height: 35px;
+    width: 400px;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+.listing_name_property{
+    border: 1px solid rgb(189, 189, 189);
+    padding: 20px;
+    margin-left: 150px;
+    border-radius: 5px;
+    width: 60%;
+}
+.listing_name_property input{
+    height: 35px;
+    width: 400px;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+.listing_info_property{
+    border: 1px solid rgb(189, 189, 189);
+    padding: 20px;
+    margin-left: 150px;
+    border-radius: 5px;
+    width: 60%;
+}
+.listing_info_property input{
+    height: 35px;
+    width: 400px;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+.listing_price{
+    border: 1px solid rgb(189, 189, 189);
+    padding: 20px;
+    margin-left: 150px;
+    border-radius: 5px;
+    width: 60%;
+}
+.listing_price input{
+    height: 35px;
+    width: 400px;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+.listing_image{
+    border: 1px solid rgb(189, 189, 189);
+    padding: 20px;
+    margin-left: 150px;
+    border-radius: 5px;
+    width: 60%;
+}
+.listing_button{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}

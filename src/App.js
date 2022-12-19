@@ -9,6 +9,7 @@ import Overview from "./pages/Listing/Overview";
 import ListingHome from "./pages/Listing/ListingHome"
 import ResetPassword from "./pages/Account/ResetPassword";
 import Profile from "./pages/Listing/Profile";
+import ListingDetails from "./pages/Listing/ListingDetails";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Home from "./pages/Home";
@@ -58,6 +59,7 @@ function App() {
             <Route path="Overview" element={<Overview />} />
             <Route path="Profile" element={<Profile />} />
             <Route path="ListingHome" element={<ListingHome />} />
+            <Route path="ListingDetails" element={<ListingDetails />} />
             <Route path="/home/details/:id" element={<HomeDetails />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
