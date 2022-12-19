@@ -20,3 +20,9 @@ export const addToCart = (data) => {
 export const getCart = (sessionId) => {
   return axiosService.get(`${API_ENDPOINT}/${HOTEL.GET_CART}/${sessionId}`);
 };
+
+export const deleteItem = (sessionId, hotelId) => {
+  return axiosService.delete(
+    `${API_ENDPOINT}/${HOTEL.DELETE_ITEM_FROM_CART}/${sessionId}/${hotelId}`
+  );
+};

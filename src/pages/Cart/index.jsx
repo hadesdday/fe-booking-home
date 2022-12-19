@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getCart } from '../../api/hotel.api';
+import { deleteItem, getCart } from '../../api/hotel.api';
 import { AppContext } from "../../context/AppContext";
 import { getDateRangeInPlainWithMonth, getNightNumber } from '../../utils/DateUtils';
 import { Formatter } from '../../utils/MoneyFormatter';
+import { toastError, toastSuccess } from '../../services/ToastService';
 import "./styles.scss";
 
 function Cart(props) {
@@ -51,7 +52,7 @@ function Cart(props) {
     console.log("chosen ", chosenItem);
 
     var totalPrice = 0;
-    if (chosenItem.length > 0) {
+    if (chosenItem && chosenItem.length > 0) {
         chosenItem.map((item) => totalPrice += item.hotel.rooms[0].price);
     }
 
@@ -63,7 +64,7 @@ function Cart(props) {
     }
 
     const Button = () => {
-        if (chosenItem.length > 0) {
+        if (chosenItem && chosenItem.length > 0) {
             return (
                 <Link to={"/checkout"} role={"button"} className={`btn btn__next border-0 text-white btn__next-active bx__shadow`} onClick={setChosenToSession}>Next</Link>
             );
@@ -100,7 +101,34 @@ function Cart(props) {
     }
 
     function onDeleteItem(e) {
+        var value = Number(e.target.getAttribute("data-id"));
 
+        const sessionId = sessionStorage.getItem("sessionId");
+
+        deleteItem(sessionId, value).then((res) => {
+            if (res.data === true) {
+                toastSuccess("Delete item successfully");
+                removeItem();
+                setChosenItem(
+                    chosenItem.filter((item) => item.hotel.id !== value)
+                );
+            } else {
+                toastError("Delete item failed");
+            }
+        })
+    }
+
+    console.log("no", cartItems);
+    console.log("no1", cartItems.filter(item => item.hotel.id !== 8));
+    function removeItem() {
+        setCartItems([]);
+        const sessionId = sessionStorage.getItem("sessionId");
+        getCart(sessionId).then((res) => {
+            const { data } = res;
+            let deserializedArray = [];
+            Object.values(data).map((item) => deserializedArray.push(item))
+            setCartItems(deserializedArray);
+        });
     }
 
     return (
@@ -132,7 +160,7 @@ function Cart(props) {
                                                     </div>
                                                 </div>
                                                 <div className="col text-end p-3">
-                                                    <i className='bx bx-trash fs-180 c-pointer'></i>
+                                                    <i className='bx bx-trash fs-180 c-pointer' data-id={`${item.hotel.id}`} onClick={onDeleteItem}></i>
                                                 </div>
                                             </div>
                                             <div className="row m-2 mt-0">
@@ -179,7 +207,7 @@ function Cart(props) {
                                 <div className="col">Total price</div>
                                 <div className="col text-end text-danger">{Formatter.format(total)}</div>
                                 <div className="row">
-                                    <p className="text-muted">{chosenItem.length > 0 ? chosenItem.length + ` item${chosenItem.length > 1 ? "s" : ""}, including taxes & fees` : "No items selected yet"}</p>
+                                    <p className="text-muted">{chosenItem ? chosenItem.length + ` item${chosenItem.length > 1 ? "s" : ""}, including taxes & fees` : "No items selected yet"}</p>
                                 </div>
                                 <div className="row gx-1">
                                     <Button />
