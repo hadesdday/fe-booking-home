@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { FreeMode, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { addToCart, getHotelDetails, reportHotel } from '../../api/hotel.api';
+import { addToCart, getHotelDetails, getReservedDate, reportHotel } from '../../api/hotel.api';
 import Pic1 from "../../assets/location/pic1.jpg";
 import Pic2 from "../../assets/location/pic2.jpg";
 import Pic3 from "../../assets/location/pic3.jpg";
@@ -41,6 +41,7 @@ function HomeDetails(props) {
         , reviews: [],
         rooms: []
     });
+    const [reservedDate, setReservedDate] = useState([]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -50,12 +51,46 @@ function HomeDetails(props) {
                 console.log(data);
                 setHotel(data);
             });
+            await getReservedDate(id).then((res) => {
+                setReservedDate(res.data);
+            });
             return;
         });
         return () => {
             fetchData();
         };
     }, []);
+
+    function getDateInObject(date) {
+        const re = {
+            year: 0,
+            month: 0,
+            day: 0
+        }
+        const d = new Date(date);
+        re.year = d.getFullYear();
+        re.month = d.getMonth() + 1;
+        re.day = d.getDate();
+        return re;
+    }
+
+    const disabledDays = [];
+    reservedDate && reservedDate.map((item) => {
+        const { dateCheckin, dateCheckout } = item;
+
+        const checkin = getDateInObject(dateCheckin);
+        const checkout = getDateInObject(dateCheckout);
+        const days = getNightNumber({ from: checkin, to: checkout });
+
+        disabledDays.push(checkin);
+        disabledDays.push(checkout);
+
+        for (let i = 1; i <= days; i++) {
+            const nextDate = new Date(checkin.year, checkin.month - 1, checkin.day + i);
+            const nextDateInObject = { year: nextDate.getFullYear(), month: nextDate.getMonth(), day: nextDate.getDate() };
+            disabledDays.push(nextDateInObject);
+        }
+    });
 
     const { images, info, name, owner, place, policy, reviews, rooms } = hotel;
     const numberOfPeople = rooms.length > 0 && rooms.reduce((a, b) => ({ children: a.children + b.children, adult: a.adult + b.adult }));
@@ -381,6 +416,7 @@ function HomeDetails(props) {
                                             minimumDate={utils().getToday()}
                                             shouldHighlightWeekends
                                             renderInput={renderCustomOnInput}
+                                            disabledDays={disabledDays}
                                         />
                                     </div>
                                 </div>

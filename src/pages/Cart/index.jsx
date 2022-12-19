@@ -140,6 +140,7 @@ function Cart(props) {
         re.day = d.getDate();
         return re;
     }
+    
     function getDateRangeFromObject(fr, t) {
         const from = getDateInObject(fr);
         const to = getDateInObject(t);
