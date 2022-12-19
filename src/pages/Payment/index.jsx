@@ -93,9 +93,6 @@ function Payment(props) {
                 }
             })
         })
-        // console.log("submitted information", customer);
-        // console.log("session id", sessionId);
-        // console.log("chosen items", chosenItems);
     }
 
     return (

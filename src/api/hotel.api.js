@@ -30,3 +30,13 @@ export const deleteItem = (sessionId, hotelId) => {
 export const bookHotel = (data) => {
   return axiosService.post(`${API_ENDPOINT}/${HOTEL.BOOKING_HOTEL}`, data);
 };
+
+export const reportHotel = (data) => {
+  return axiosService.post(`${API_ENDPOINT}/${HOTEL.REPORT_HOTEL}`, data);
+};
+
+export const getReservedDate = (hotelId) => {
+  return axiosService.get(
+    `${API_ENDPOINT}/${HOTEL.FETCH_RESERVED_DATE}/${hotelId}`
+  );
+};
