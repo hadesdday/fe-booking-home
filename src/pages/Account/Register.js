@@ -3,12 +3,32 @@ import React, { useEffect, useRef, useState } from "react";
 import "./register.css"
 
 function Register () {
-    const [firstname,SetFirstName] = useState('');
-    const [lastname,setLastName] = useState('');
+    const [username,setUserName] = useState('');
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
-    const [confirmpassword,setConfirmPassword] = useState('');
+    const handleClick=(e)=>{
+        e.preventDefault()
+        const user={username,password,email}
+        console.log(user)
+        fetch("http://localhost:8080/user/insert",{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify(user)
     
+      }).then(()=>{
+        console.log("New user added");
+        window.location.href = "/Login";
+      })
+    }
+    /*useEffect(()=>{
+        fetch("http://localhost:8080/student/getAll")
+        .then(res=>res.json())
+        .then((result)=>{
+          setStudents(result);
+        }
+      )
+      },[])
+    */
     return (
         
         <section>
@@ -17,22 +37,18 @@ function Register () {
             <div className="container_left">
             <h3>Sign Up</h3>
             <form>
-                <p>First Name</p>
-                <input type="text" name="f_name" placeholder="First Name" onChange={(e)=>SetFirstName(e.target.value)}/>
-                <p>Last Name</p>
-                <input type="text" placeholder="Last Name" onChange={(e)=>setLastName(e.target.value)}/>
+                <p>User Name</p>
+                <input type="text" placeholder="User Name" onChange={(e)=>setUserName(e.target.value)}/>
                  <p>Email</p>
                 <input type="text" name="email" placeholder="Email" onChange={(e)=>setEmail(e.target.value)}/>
                 <p>Password</p>
                 <input type="text" placeholder="Password" onChange={(e)=>setPassword(e.target.value)}/>
-                <p>Confirm Password</p>
-                <input type="text" name="confirmPassword" placeholder="Confirm Password" onChange={(e)=>setConfirmPassword(e.target.value)}/>
                 <div className="check_policy">
                     <p>
                     Email me exclusive Agoda promotions. I can opt out later as stated in the Privacy Policy.
                     </p>
                 </div>
-                <button className="login_btn">Sign Up</button>
+                <button className="login_btn" onClick={handleClick}>Sign Up</button>
                 <div className="device">
                     <span></span>
                     <p>or continue with</p>

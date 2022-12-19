@@ -3,8 +3,24 @@ import ReactDOM from "react-dom/client";
 import "./login.css";
 
 function Login(){
+    //Login data xem trong console
     const [username,setUserName] = useState('');
     const [password,setPassword] = useState('');
+    const [userData,setUserData] = useState([]);
+    const handleClick=(e)=>{
+        e.preventDefault()
+        const user={username,password}
+        console.log(user);
+        fetch(`http://localhost:8080/user/login/${encodeURIComponent(username)}&${encodeURIComponent(password)}`)
+        .then(res=>res.json())
+        .then((result)=>{
+          console.log(result);
+          setUserData(result);
+          console.log(userData);
+        }
+      )
+    }
+
     return (
     <>
         <section>
@@ -14,11 +30,11 @@ function Login(){
             <h3>Sign In</h3>
             <form>
                 <p>User Name</p>
-                <input type="text" name="username" placeholder="User Name" onChange={(e)=>setUserName(e.target.value)}/>
+                <input type="text"  placeholder="User Name" onChange={(e)=>setUserName(e.target.value)}/>
                 <p>Password</p>
-                <input type="password" name="password" placeholder="Password" onChange={(e)=>setPassword(e.target.value)}/>
+                <input type="current-password"  placeholder="Password" onChange={(e)=>setPassword(e.target.value)}/>
                 
-                <button className="login_btn">Sign In</button>
+                <button className="login_btn" onClick={handleClick}>Sign In</button>
                 <div className="link">
                     <a href="/Register">create account</a>
                     <a href="/ResetPassword">forgot password</a>
