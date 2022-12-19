@@ -117,9 +117,6 @@ function Cart(props) {
             }
         })
     }
-
-    console.log("no", cartItems);
-    console.log("no1", cartItems.filter(item => item.hotel.id !== 8));
     function removeItem() {
         setCartItems([]);
         const sessionId = sessionStorage.getItem("sessionId");
@@ -129,6 +126,24 @@ function Cart(props) {
             Object.values(data).map((item) => deserializedArray.push(item))
             setCartItems(deserializedArray);
         });
+    }
+
+    function getDateInObject(date) {
+        const re = {
+            year: 0,
+            month: 0,
+            day: 0
+        }
+        const d = new Date(date);
+        re.year = d.getFullYear();
+        re.month = d.getMonth() + 1;
+        re.day = d.getDate();
+        return re;
+    }
+    function getDateRangeFromObject(fr, t) {
+        const from = getDateInObject(fr);
+        const to = getDateInObject(t);
+        return { from, to };
     }
 
     return (
@@ -186,7 +201,7 @@ function Cart(props) {
                                                     </div>
                                                     <div className="row">
                                                         <p className="text-muted">
-                                                            {getDateRangeInPlainWithMonth(selectedDayRange)}
+                                                            {getDateRangeInPlainWithMonth(getDateRangeFromObject(item.from, item.to))}
                                                         </p>
                                                     </div>
                                                 </div>
