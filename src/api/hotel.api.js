@@ -26,3 +26,7 @@ export const deleteItem = (sessionId, hotelId) => {
     `${API_ENDPOINT}/${HOTEL.DELETE_ITEM_FROM_CART}/${sessionId}/${hotelId}`
   );
 };
+
+export const bookHotel = (data) => {
+  return axiosService.post(`${API_ENDPOINT}/${HOTEL.BOOKING_HOTEL}`, data);
+};

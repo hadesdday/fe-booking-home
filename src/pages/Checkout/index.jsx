@@ -7,6 +7,7 @@ import { AppContext } from '../../context/AppContext';
 import { COUNTRY_LIST } from '../../utils/CountryList';
 import { getDateRangeInPlainWithMonth, getNightNumber } from "../../utils/DateUtils";
 import { Formatter } from '../../utils/MoneyFormatter';
+import $ from 'jquery';
 import "./styles.scss";
 
 function Checkout(props) {
@@ -70,6 +71,16 @@ function Checkout(props) {
     var fee = totalPrice * 0.1;
     var total = totalPrice + fee;
 
+    function onClickPayment() {
+        const data = {
+            username: $("input[name='username']").val(),
+            email: $("#email").val(),
+            name: $("#first__name").val() + " " + $("#last__name").val(),
+            country: countryObject.name,
+            phone: $("#phone__num").val(),
+        };
+        sessionStorage.setItem("customer", JSON.stringify(data));
+    }
 
     return (
         <>
@@ -94,6 +105,7 @@ function Checkout(props) {
                                 </p>
                             </div>
                             <div className="row mt-3 g-2">
+                                <input type="hidden" name="username" value="" />
                                 <div className="col">
                                     <label htmlFor="first__name">First name</label>
                                     <div className="input-group">
@@ -122,11 +134,11 @@ function Checkout(props) {
                             <div className="row mt-3 g-2">
                                 <label htmlFor="phone__num">Mobile number</label>
                                 <div className="input-group mb-4">
-                                    <input type="tel" className="form-control p-2" id='phone__num' placeholder='Mobile Number' name='phone__num' />
+                                    <input type="tel" className="form-control p-2" id='phone__num' placeholder='Mobile Number' name='phone__num' maxLength={10} />
                                 </div>
                             </div>
                             <div className="row justify-content-end hide-mobile">
-                                <Link to={"/checkout/payment"} className="text-center btn__main text-white rounded-2 p-3 px-2 mt-3 bx__shadow w-40">Continue to payment</Link>
+                                <Link to="/checkout/payment" className="text-center btn__main text-white rounded-2 p-3 px-2 mt-3 bx__shadow w-40" onClick={onClickPayment}>Continue to payment</Link>
                             </div>
                         </div>
                         <div className="col-md-4 m-2">
@@ -157,7 +169,7 @@ function Checkout(props) {
                                                 </div>
                                             </div>
                                         </div>
-                                        <p className='fs-7'><i className='bx bx-calendar'></i> {getDateRangeInPlainWithMonth(getDateRangeFromObject(item.from, item.to))} | {night} night{night > 1 && "s"}</p>
+                                        <p className='fs-7'><i className='bx bx-calendar'></i> {getDateRangeInPlainWithMonth(getDateRangeFromObject(item.from, item.to))} | {getNightNumber(getDateRangeFromObject(item.from, item.to))} night{getNightNumber(getDateRangeFromObject(item.from, item.to)) > 1 && "s"}</p>
                                         <p className='fs-7'><i className='bx bx-user'></i> {home.room} room{home.room > 1 && "s"}, {item.adult} adult{item.adult > 1 && "s"}{item.children > 0 && ", " + item.children + " child"}{item.children > 1 && "s"}</p>
                                     </div>
                                 ))}
