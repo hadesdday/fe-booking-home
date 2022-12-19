@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { FreeMode, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { addToCart, getHotelDetails } from '../../api/hotel.api';
+import { addToCart, getHotelDetails, reportHotel } from '../../api/hotel.api';
 import Pic1 from "../../assets/location/pic1.jpg";
 import Pic2 from "../../assets/location/pic2.jpg";
 import Pic3 from "../../assets/location/pic3.jpg";
@@ -112,12 +112,10 @@ function HomeDetails(props) {
 
     var shortDescription = info.substring(0, info.lastIndexOf(" ", 100));
 
-    var amenities = ["No"];
-    // if (rooms.length > 0) {
-    //     rooms.map((item) => {
-    //         amenities.push(...item.facilities);
-    //     });
-    // }
+    var amenities = [];
+    if (rooms.length > 0) {
+        amenities = [hotel.rooms[0].roomFacilities];
+    }
     var policies = [policy];
 
     var locationArr = [];
@@ -150,10 +148,22 @@ function HomeDetails(props) {
     }
 
     function onSubmitReason() {
-        console.log(reportReason);
-        setShowReport(false);
-        enableScrollbar();
-        toastSuccess("Reported successfully");
+        const data = {
+            content: reportReason,
+            username: "anonymous",
+            status: 3
+        };
+
+        reportHotel(data).then((res) => {
+            if (res.status === 200) {
+                setShowReport(false);
+                enableScrollbar();
+                toastSuccess("Reported successfully");
+            }
+        }).catch((err) => {
+            toastError("Reported failed");
+        })
+
     }
 
     function onAddToCart() {
@@ -386,20 +396,6 @@ function HomeDetails(props) {
                                                     {home.room} room{home.room > 1 && "s"}
                                                 </div>
                                                 <div className="dropdown-content">
-                                                    <div className="row">
-                                                        <div className="col-4 mt-2">
-                                                            <p className='fw-bold'>Rooms</p>
-                                                        </div>
-                                                        <div className="col-2">
-                                                            <button className='btn' name='adults' onClick={() => setRoomValue(home.room - 1)}>-</button>
-                                                        </div>
-                                                        <div className="col-4">
-                                                            <input type="number" value={home.room} className="form-control input__people" onChange={onChangePeople} name="room" min={"1"} max={"9"} />
-                                                        </div>
-                                                        <div className="col-2">
-                                                            <button className='btn' name='adults' onClick={() => setRoomValue(home.room + 1)}>+</button>
-                                                        </div>
-                                                    </div>
                                                     <div className="row">
                                                         <div className="col-4 mt-2">
                                                             <p className='fw-bold'>Adults</p>
