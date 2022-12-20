@@ -149,7 +149,7 @@ function HomeDetails(props) {
 
     var amenities = [];
     if (rooms.length > 0) {
-        amenities = [hotel.rooms[0].roomFacilities];
+        amenities = [...hotel.rooms[0].roomFacilities];
     }
     var policies = [policy];
 
@@ -359,7 +359,7 @@ function HomeDetails(props) {
                                         <div className="row">
                                             <div className="col-1"><i className='bx bx-like fs-180'></i></div>
                                             <div className="col-11">
-                                                <p className="fw-semibold p-1">{item}</p>
+                                                <p className="fw-semibold p-1">{item.facility.name}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -370,7 +370,7 @@ function HomeDetails(props) {
                                             <div className="row">
                                                 <div className="col-1"><i className='bx bx-like fs-180'></i></div>
                                                 <div className="col-11">
-                                                    <p className="fw-semibold p-1">{item}</p>
+                                                    <p className="fw-semibold p-1">{item.facility.name}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -562,8 +562,8 @@ function HomeDetails(props) {
                                     <img src={Pic1} alt="" className="rounded-circle avatar" />
                                 </div>
                                 <div className="col-11">
-                                    <p className="fw-semibold">Hosted By Hieu Nguyen</p>
-                                    <p>Joined in February 2020</p>
+                                    <p className="fw-semibold">Hosted By {owner.name}</p>
+                                    <p>Joined in November 2022</p>
                                 </div>
                             </div>
                             <div className="row">
@@ -591,7 +591,7 @@ function HomeDetails(props) {
                         <div className="position-absolute top-50 start-50 translate-middle bg-light text-dark w-50 rounded-1 text-start mt-5">
                             <div className="row p-4">
                                 <h4 className="fw-semibold">Host Information</h4>
-                                <a href='mailto:gotrip@gmail.com' className='text-black fs-5'><i className='bx bx-envelope'></i> gotrip@gmail.com</a>
+                                {/* <a href='mailto:gotrip@gmail.com' className='text-black fs-5'><i className='bx bx-envelope'></i> gotrip@gmail.com</a> */}
                                 <a href={`tel:${owner.phone}`} className='text-black fs-5'><i className='bx bx-phone'></i> {owner.phone}</a>
                             </div>
                         </div>
