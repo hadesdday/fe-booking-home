@@ -11,3 +11,8 @@ export const DELETE_ITEM_FROM_CART = GET_CART + "/delete";
 export const BOOKING_HOTEL = BOOKING_RESOURCE + "/bookingByClient";
 
 export const REPORT_HOTEL = REPORT_RESOURCE + "/add";
+
+export const FETCH_BOOKING_HISTORY_EMAIL =
+  BOOKING_RESOURCE + "/getBookingHistoryByEmail";
+export const FETCH_BOOKING_HISTORY_USERNAME =
+  BOOKING_RESOURCE + "/getBookingHistoryByUsername";

@@ -15,7 +15,7 @@ function Login(){
         .then(res=>res.json())
         .then((result)=>{
           console.log(result);
-          setUserData(result);
+        //   setUserData(result);
           const json = JSON.stringify(result);
           localStorage.setItem("userData",json);
         }
