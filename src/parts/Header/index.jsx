@@ -3,6 +3,13 @@ import { Outlet, Link } from "react-router-dom";
 import "./styles.scss";
 
 function Header() {
+    const user = JSON.parse(localStorage.getItem("userData"));
+
+    function handleLogout() {
+        localStorage.clear();
+        window.location.reload();
+    }
+
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-white z-3 bx__shadow">
@@ -30,10 +37,20 @@ function Header() {
                             <Link to="/Overview" role="button" className="btn__register__rental">List your place</Link>
                             <Link to='/cart' role="button" className="btn__cart">
                                 <i className='bx bx-cart ico__cart'></i></Link>
-
-                            <Link to="/Login" role="button" className="btn__signin">Sign in</Link>
-
-                            <Link to="/Register" role="button" className="btn__create__account">Create Account</Link>
+                            {user ?
+                                <div className="profile__parent">
+                                    <span>{user.username}</span>
+                                    <div className="profile__content">
+                                        <a className='c-pointer'>Profile</a><br />
+                                        <a className='c-pointer' onClick={handleLogout}>Logout</a>
+                                    </div>
+                                </div>
+                                :
+                                <>
+                                    <Link to="/Login" role="button" className="btn__signin">Sign in</Link>
+                                    <Link to="/Register" role="button" className="btn__create__account">Create Account</Link>
+                                </>
+                            }
                         </div>
                     </div>
                 </div>

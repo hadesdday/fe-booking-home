@@ -1,11 +1,26 @@
 import $ from "jquery";
-import React, { useState } from 'react';
-import { getBookingHistoryByEmail } from '../../api/hotel.api';
+import React, { useEffect, useState } from 'react';
+import { getBookingHistoryByEmail, getBookingHistoryByUsername } from '../../api/hotel.api';
 import Background from "../../assets/bg-history.png";
 
 function BookingHistory(props) {
     const [bookingHistory, setBookingHistory] = useState([]);
     const [status, setStatus] = useState(false);
+
+    const user = JSON.parse(localStorage.getItem('userData'));
+    useEffect(() => {
+        const fetchList = () => {
+            if (user) {
+                getBookingHistoryByUsername(user.username).then((res) => {
+                    setBookingHistory(res.data);
+                    setStatus(true);
+                })
+            }
+        }
+        return () => {
+            fetchList();
+        };
+    }, []);
 
     async function handleOnClick() {
         const email = $('input[name="email"]').val();
@@ -50,7 +65,9 @@ function BookingHistory(props) {
                                 <h4>Recently booking list</h4>
                             </div>
                             <div className="col-6 text-end">
-                                <a className="text-primary c-pointer" onClick={handleOnQuit}>Quit</a>
+                                {!user &&
+                                    <a className="text-primary c-pointer" onClick={handleOnQuit}>Quit</a>
+                                }
                             </div>
                         </div>
                         <div className="row w-100">
@@ -66,7 +83,7 @@ function BookingHistory(props) {
                                     </tr>
                                 </thead>
                                 <tbody className="table-group-divider">
-                                    {bookingHistory.map((item) => (
+                                    {bookingHistory.length > 0 ? bookingHistory.map((item) => (
                                         <tr key={item.id}>
                                             <th className="fw-normal">{item.id}</th>
                                             <th className="fw-normal">{item.hotel.name}</th>
@@ -75,7 +92,7 @@ function BookingHistory(props) {
                                             <th className="fw-normal">{item.hotel.rooms[0].price}</th>
                                             <th className="fw-semibold">{item.status}</th>
                                         </tr>
-                                    ))}
+                                    )) : <tr><td colSpan="6" className="text-center">No data</td></tr>}
                                 </tbody>
                             </table>
                         </div>
