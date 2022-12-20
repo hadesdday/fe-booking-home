@@ -1,18 +1,11 @@
 import DatePicker, { utils } from '@hassanmojab/react-modern-calendar-datepicker';
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import { FreeMode, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { addToCart, getHotelDetails, getReservedDate, reportHotel } from '../../api/hotel.api';
 import Pic1 from "../../assets/location/pic1.jpg";
-import Pic2 from "../../assets/location/pic2.jpg";
-import Pic3 from "../../assets/location/pic3.jpg";
-import Pic4 from "../../assets/location/pic4.jpg";
-import Pic5 from "../../assets/location/pic5.jpeg";
-import Pic6 from "../../assets/location/pic6.jpg";
-import Pic7 from "../../assets/location/pic7.jpg";
-import Pic8 from "../../assets/location/pic8.jpg";
-import Pic9 from "../../assets/location/pic9.png";
 import { AppContext } from '../../context/AppContext';
 import { toastError, toastSuccess } from '../../services/ToastService';
 import { deserializeDayToString, getDateRangeInPlainWithMonth, getNightNumber } from '../../utils/DateUtils';
@@ -153,18 +146,6 @@ function HomeDetails(props) {
     }
     var policies = [policy];
 
-    var locationArr = [];
-
-    locationArr.push(Pic1);
-    locationArr.push(Pic2);
-    locationArr.push(Pic3);
-    locationArr.push(Pic4);
-    locationArr.push(Pic5);
-    locationArr.push(Pic6);
-    locationArr.push(Pic7);
-    locationArr.push(Pic8);
-    locationArr.push(Pic9);
-
     const [showNav, setShowNav] = useState(false);
     window.addEventListener("scroll", (event) => {
         let scroll = window.scrollY;
@@ -220,6 +201,17 @@ function HomeDetails(props) {
             .catch(function (err) {
                 toastError(err.response.data);
             })
+    }
+    function onReserveDirectly() {
+        const array = [];
+        array.push({
+            hotel: hotel,
+            adult: home.adults,
+            children: home.child,
+            from: deserializeDayToString(selectedDayRange.from),
+            to: deserializeDayToString(selectedDayRange.to),
+        });
+        sessionStorage.setItem("chosenItem", JSON.stringify(array));
     }
 
     return (
@@ -467,7 +459,7 @@ function HomeDetails(props) {
                                 </div>
                             </div>
                             <div className="row p-3">
-                                <button className="btn btn__reserve text-white fw-semibold p-3">Reserve</button>
+                                <Link to="/checkout" className="btn btn__reserve text-white fw-semibold p-3" onClick={onReserveDirectly}>Reserve</Link>
                                 <button className="btn btn__add__cart fw-semibold p-3 mt-4" onClick={onAddToCart}>Add to cart</button>
                             </div>
                             <div className="row p-3">
@@ -714,10 +706,10 @@ function HomeDetails(props) {
                         freeMode={true}
                         modules={[Navigation, Pagination, FreeMode]} className="w-75">
                         {
-                            locationArr.map((item, index) =>
+                            images.map((item, index) =>
                                 <SwiperSlide key={index}>
                                     <div className="row d-flex justify-content-center">
-                                        <img src={item} alt="" className='w-100 overlay__img' />
+                                        <img src={item.image} alt="" className='w-100 overlay__img' />
                                     </div>
                                 </SwiperSlide>)
                         }
