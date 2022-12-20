@@ -6,7 +6,7 @@ import AppProvider from "./context/AppContext";
 import Login from "./pages/Account/Login";
 import Register from "./pages/Account/Register";
 import Overview from "./pages/Listing/Overview";
-import ListingHome from "./pages/Listing/ListingHome"
+import ListingHome from "./pages/Listing/ListingHome";
 import ResetPassword from "./pages/Account/ResetPassword";
 import Profile from "./pages/Listing/Profile";
 import ListingDetails from "./pages/Listing/ListingDetails";
@@ -17,6 +17,7 @@ import HomeDetails from "./pages/HomeDetails";
 import Footer from "./parts/Footer";
 import Header from "./parts/Header";
 import Payment from "./pages/Payment";
+import Success from "./pages/Success";
 function App() {
   const [visible, setVisible] = useState(false);
 
@@ -64,6 +65,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/checkout/payment" element={<Payment />} />
+            <Route path="/success" element={<Success />} />
             {/* <Route path="/search/" */}
           </Routes>
           <Footer />

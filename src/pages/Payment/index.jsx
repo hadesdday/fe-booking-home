@@ -10,7 +10,7 @@ import MasterIcon from "../../assets/icon/ic_master.png";
 import $ from "jquery";
 import "./styles.scss";
 import { toastError, toastSuccess } from '../../services/ToastService';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { bookHotel } from '../../api/hotel.api';
 
 function Payment(props) {
@@ -19,6 +19,7 @@ function Payment(props) {
     const countryObject = COUNTRY_LIST.find(a => a.value === country);
     const night = getNightNumber(selectedDayRange);
     const chosenItems = JSON.parse(sessionStorage.getItem("chosenItem"));
+    const navigate = useNavigate();
 
     function getDateInObject(date) {
         const re = {
@@ -88,8 +89,8 @@ function Payment(props) {
             console.log("final data", data);
             bookHotel(data).then((res) => {
                 console.log("book hotel response", res);
-                if (res.status === 200) {
-                    toastSuccess("Book hotel successfully");
+                if (res.status) {
+                    navigate("/success");
                 }
             })
         })

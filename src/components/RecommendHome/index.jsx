@@ -27,7 +27,7 @@ function RecommendHome(props) {
         <>
             <Link to={`/home/details/${id}`} className="col-md-3 col-sm-12 p-1">
                 <div className="row">
-                    <img src={images[0].image} alt="" className='w-95' />
+                    <img src={images.length > 0 ? images[0].image : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"} alt="" className='w-95' style={{ maxHeight: 284 }} />
                 </div>
                 <div className="row">
                     <h6 className='fw-semibold text-black'>{name}</h6>
@@ -41,7 +41,7 @@ function RecommendHome(props) {
                 </div>
                 <div className="row">
                     <p className='text-danger fw-bold cl-red'>
-                        {formatter.format(minPrice)}
+                        {minPrice !== Infinity ? formatter.format(minPrice) : "?"}
                     </p>
                 </div>
             </Link>

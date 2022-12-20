@@ -43,6 +43,7 @@ import { getHotelList } from '../../api/hotel.api';
 import RecommendPlaces from '../../components/RecommendPlaces';
 import { AppContext } from '../../context/AppContext';
 import "./styles.scss";
+import { Outlet } from 'react-router';
 
 function Home(props) {
     const [option, setOption] = useState(0);
