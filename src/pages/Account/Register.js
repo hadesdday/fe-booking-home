@@ -6,9 +6,12 @@ function Register () {
     const [username,setUserName] = useState('');
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
+    const [name,setName] = useState('');
+    const [country,setCountry] = useState('');
+    const [phone,setPhone] = useState('');
     const handleClick=(e)=>{
         e.preventDefault()
-        const user={username,password,email}
+        const user={username,password,email,name,country,phone}
         console.log(user)
         fetch("http://localhost:8080/user/insert",{
           method:"POST",
@@ -42,7 +45,13 @@ function Register () {
                  <p>Email</p>
                 <input type="text" name="email" placeholder="Email" onChange={(e)=>setEmail(e.target.value)}/>
                 <p>Password</p>
-                <input type="text" placeholder="Password" onChange={(e)=>setPassword(e.target.value)}/>
+                <input type="text" placeholder="setPassword" onChange={(e)=>setPassword(e.target.value)}/>
+                <p>Password</p>
+                <input type="text" placeholder="Name" onChange={(e)=>setName(e.target.value)}/>
+                <p>Password</p>
+                <input type="text" placeholder="Country" onChange={(e)=>setCountry(e.target.value)}/>
+                <p>Password</p>
+                <input type="text" placeholder="Phone" onChange={(e)=>setPhone(e.target.value)}/>
                 <div className="check_policy">
                     <p>
                     Email me exclusive Agoda promotions. I can opt out later as stated in the Privacy Policy.
