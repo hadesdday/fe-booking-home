@@ -6,7 +6,7 @@ function Login(){
     //Login data xem trong console
     const [username,setUserName] = useState('');
     const [password,setPassword] = useState('');
-    const [userData,setUserData] = useState([]);
+    localStorage.setItem("message","saved in browser storage");
     const handleClick=(e)=>{
         e.preventDefault()
         const user={username,password}
@@ -16,7 +16,8 @@ function Login(){
         .then((result)=>{
           console.log(result);
           setUserData(result);
-          console.log(userData);
+          const json = JSON.stringify(result);
+          localStorage.setItem("userData",json);
         }
       )
     }
