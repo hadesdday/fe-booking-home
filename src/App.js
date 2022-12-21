@@ -19,6 +19,7 @@ import Header from "./parts/Header";
 import Payment from "./pages/Payment";
 import Success from "./pages/Success";
 import BookingHistory from "./pages/BookingHistory";
+import CheckPaymentStatus from "./pages/CheckPaymentStatus";
 function App() {
   const [visible, setVisible] = useState(false);
 
@@ -68,6 +69,7 @@ function App() {
             <Route path="/checkout/payment" element={<Payment />} />
             <Route path="/success" element={<Success />} />
             <Route path="/booking/history" element={<BookingHistory />} />
+            <Route path="/payment/check" element={<CheckPaymentStatus />} />
             {/* <Route path="/search/" */}
           </Routes>
           <Footer />

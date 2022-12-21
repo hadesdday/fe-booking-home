@@ -42,7 +42,7 @@ function Footer(props) {
                                 <p className='fw-bold help__title'>Follow Us</p>
                             </div>
                             <div className="col-3 col__icon">
-                                <a href="facebook.com">
+                                <a href="https://facebook.com">
                                     <i className='bx bxl-facebook meta__ico'></i>
                                 </a>
                             </div>

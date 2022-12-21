@@ -1,21 +1,25 @@
 import React, { useEffect } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import 'react-select-search/style.css';
+import { bookHotel } from '../../api/hotel.api';
+import $ from 'jquery';
 import "./styles.scss";
 
 function Success(props) {
+    const customer = sessionStorage.getItem("customer");
+    const chosenItems = sessionStorage.getItem("chosenItem");
+    const clearSession = () => {
+        sessionStorage.clear();
+        localStorage.clear();
+    }
+
     useEffect(() => {
-        const clearSession = () => {
-            if (sessionStorage.getItem("sessionId") !== null)
-                sessionStorage.clear();
-        }
-        return () => {
-            clearSession();
-        };
-    }, []);
+        clearSession();
+    }, [])
+
     return (
         <>
-            {sessionStorage.getItem("sessionId") === null && <Navigate to="/" exact />}
+            {(customer === null || chosenItems === null) && <Navigate to="/" exact />}
             <div className="position-relative m-4">
                 <div className="progress" style={{ height: "1px" }}>
                     <div className="progress-bar" role="progressbar" aria-label="Progress" style={{ width: "100%" }} aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>

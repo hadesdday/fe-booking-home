@@ -335,13 +335,15 @@ function Home(props) {
             </div>
             <div className="featured__location__list container d-flex justify-content-center">
                 <div className="row w-95">
-                    {recommendHomeList.length > 0 && recommendHomeList.map((item) => (
+                    {recommendHomeList.length > 0 ? recommendHomeList.map((item) => (
                         <RecommendHome key={item.id} images={item.images} name={item.name} reviews={item.reviews} location={item.place.province} price={item.price} id={item.id} rooms={item.rooms} />
-                    ))}
+                    ))
+                        : <h4 className='text-center'>Not found anything here</h4>
+                    }
 
-                    <div className="row justify-content-center mt-3">
+                    {/* <div className="row justify-content-center mt-3">
                         <a href="" role={"button"} className="btn btn__more active w-25 p-2">See more ({featuredLocation}) properties</a>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 
@@ -352,7 +354,7 @@ function Home(props) {
             <div className="container">
                 <div className="row justify-content-center pb-5">
                     {discountHotelList.length > 0 && discountHotelList.map((item) => (
-                        <RecommendPlaces imgSrc={item.images[0].image} name={item.name} location={item.place.province} rating={5} discount={item.rooms[0].discount} price={item.rooms[0].price} key={item.id} />
+                        <RecommendPlaces imgSrc={item.images[0].image} name={item.name} location={item.place.province} rating={5} discount={item.rooms[0].discount} price={item.rooms[0].price} key={item.id} id={item.id} />
                     ))}
                 </div>
             </div>
