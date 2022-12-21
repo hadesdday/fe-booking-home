@@ -46,11 +46,11 @@ function Register () {
                 <input type="text" name="email" placeholder="Email" onChange={(e)=>setEmail(e.target.value)}/>
                 <p>Password</p>
                 <input type="text" placeholder="setPassword" onChange={(e)=>setPassword(e.target.value)}/>
-                <p>Password</p>
+                <p>Name</p>
                 <input type="text" placeholder="Name" onChange={(e)=>setName(e.target.value)}/>
-                <p>Password</p>
+                <p>Country</p>
                 <input type="text" placeholder="Country" onChange={(e)=>setCountry(e.target.value)}/>
-                <p>Password</p>
+                <p>Phone</p>
                 <input type="text" placeholder="Phone" onChange={(e)=>setPhone(e.target.value)}/>
                 <div className="check_policy">
                     <p>

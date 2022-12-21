@@ -1,0 +1,131 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.listing_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: start;
+}
+.listing_head{
+    background-color: rgb(17,116,166);
+    width: 20%;
+    overflow: auto;
+    height: 1000px;
+}
+.listing_head ul{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 50px;
+}
+.listing_head ul li{
+    list-style: none;
+    color: white;
+    margin-bottom: 20px;
+}
+.listing_head ul li a{
+    color: white;
+}
+.Listing_content{
+    width: 80%;
+}
+.listing_search{
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.list_search input{
+    height: 35px;
+    width: 350px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+.list_button button{
+    height: 45px;
+    width: 150px;
+    border: 1px solid blue;
+    background-color: white;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+.list_button button:hover{
+    background-color: rgb(29, 29, 136);
+    color: white;
+}
+.list_state{
+    margin-top: 40px;
+    margin-left: 80px;
+}
+.list_state input{
+    width: 150px;
+    height: 40px;
+    margin-right: 20px;
+    border: 1px solid rgb(62, 62, 201);
+    border-radius: 5px;
+}
+.state_list_box{
+    border: 1px solid rgb(199, 199, 199);
+    margin-top: 20px;
+    margin: 50px;
+    border-radius: 5px;
+}
+
+.state_list_header ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.state_list_header ul li{
+    list-style: none;
+    font-weight: 600;
+    width: 50px;
+    font-size: 16px;
+}
+
+.state_list_data ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.state_list_data ul li{
+    list-style: none;
+    width: 50px;
+    font-size: 14px;
+}
+.state_list_data ul li img{
+    height: 50px;
+    width: 50px;
+}
+.state_checkbox{
+    margin-left: 20px;
+    position: absolute;
+    margin-top: 15px;
+}
+.publish_button button{
+    height: 45px;
+    width:200px;
+    background-color: rgb(29, 29, 136);
+    color: white;
+    font-weight: 600;
+    font-size: 24px;
+    border: 1px solid white;
+    margin-left: 50px;
+}
+.property_data{
+    position: absolute;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+.publish_button button:hover{
+    background-color: rgb(62, 62, 255);
+}

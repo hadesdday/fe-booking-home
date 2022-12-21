@@ -1,6 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./overview.css";
 function Overview(){
+    const json = localStorage.getItem("userData");
+    const savedNotes = JSON.parse(json);       
+    const map = Object.values(savedNotes);
+    if(json!=null)
+    console.log(map);
     return(
         <>
         <div className="overview_container">
@@ -9,6 +14,10 @@ function Overview(){
                 <li>
                     <i></i>
                     <a href="/Profile">OverView</a>
+                </li>
+                <li>
+                    <i></i>
+                    <a href="/Profile">Account Infomation</a>
                 </li>
                 <li>
                     <i></i>
@@ -28,7 +37,7 @@ function Overview(){
         <div className="card_profile">
             <div className="profile">
                 <img src="https://tse2.mm.bing.net/th?id=OIP.zl_Nch6D6OfZLqxf302AhgHaHw&pid=Api&P=0" alt="profile_logo" />
-                <p>Wellcome back, <span>Hiep!</span></p>
+                <p>Wellcome back, <span>{map[1]}</span></p>
                 <a href="/Profile"><button>Edit Your Profile</button></a>
                 
             </div>

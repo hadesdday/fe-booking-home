@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./resetpassword.css";
-function ResetPassword() {
-  const [email, setEmail] = useState("");
+function setPassword() {
+  const [password, setPassword] = useState("");
+  const [confirmPassword,setConfirmPassword] = useState("");
   const handleClick=(e)=>{
     e.preventDefault()
     fetch("http://localhost:8080/user/insert",{
@@ -61,4 +62,4 @@ function ResetPassword() {
     </section>
   );
 }
-export default ResetPassword;
+export default setPassword;

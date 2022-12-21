@@ -15,13 +15,21 @@ function Login(){
         .then(res=>res.json())
         .then((result)=>{
           console.log(result);
-          setUserData(result);
           const json = JSON.stringify(result);
           localStorage.setItem("userData",json);
+          window.location.href = "/";
         }
-      )
+      ) 
     }
-
+    /*
+    useEffect(() => {
+        const json = localStorage.getItem("userData");
+        const savedNotes = JSON.parse(json);       
+        if (savedNotes) {
+            console.log(savedNotes);
+        }
+      }, []);
+    */
     return (
     <>
         <section>
