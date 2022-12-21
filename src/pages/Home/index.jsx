@@ -8,9 +8,8 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
-import RecommendHome from '../../components/RecommendHome';
-import { Formatter } from '../../utils/MoneyFormatter';
 import Background from "../../assets/background.jpg";
+import RecommendHome from '../../components/RecommendHome';
 
 import Banner1 from "../../assets/promotion/banner1.png";
 import Banner10 from "../../assets/promotion/banner10.png";
@@ -35,47 +34,54 @@ import Pic7 from "../../assets/location/pic7.jpg";
 import Pic8 from "../../assets/location/pic8.jpg";
 import Pic9 from "../../assets/location/pic9.png";
 
-import Home1 from "../../assets/home1.png";
 import Home2 from "../../assets/home2.jpg";
 
 import { useContext } from 'react';
-import { getHotelList } from '../../api/hotel.api';
+import { getHotelGoodByLocation, getHotelListDiscount } from '../../api/hotel.api';
 import RecommendPlaces from '../../components/RecommendPlaces';
 import { AppContext } from '../../context/AppContext';
 import "./styles.scss";
-import { Outlet } from 'react-router';
 
 function Home(props) {
     const [option, setOption] = useState(0);
 
     const { featuredLocation, selectedDayRange, selectedDay,
-        home, setFeaturedLocation, setSelectedDayRange, setSelectedDay, setHome, onChangePeople,
+        home, setFeaturedLocation, setSelectedDayRange, setSelectedDay, onChangePeople,
         setRoomValue,
         setAdultsValue,
         setChildValue } = useContext(AppContext);
 
     const [recommendHomeList, setRecommendHomeList] = useState([]);
+    const [discountHotelList, setDiscountHotelList] = useState([]);
 
-    console.log(recommendHomeList);
-
-    // console.log("over night ", selectedDayRange);
-    // console.log("day use ", selectedDay);
-    // console.log("home ", home);
+    console.log(discountHotelList);
 
     useEffect(() => {
-        const refetch = (() => {
-            getHotelList().then((res) => {
+        const refetch = (async () => {
+            await getHotelGoodByLocation("Dong Nai".toLowerCase()).then((res) => {
                 const { data } = res;
                 setRecommendHomeList(data.slice(0, 8));
             });
-            console.log("changed location", featuredLocation);
+            await getHotelListDiscount().then((res) => {
+                const { data } = res;
+                setDiscountHotelList(data.slice(0, 5));
+            });
             return;
         });
         //cleanup function
         return () => {
             refetch();
         };
-    }, [featuredLocation]);
+    }, []);
+
+    function onFetchGoodByLocation(location) {
+        setFeaturedLocation(location);
+        setRecommendHomeList([]);
+        getHotelGoodByLocation(location.toLowerCase()).then((res) => {
+            const { data } = res;
+            setRecommendHomeList(data.slice(0, 8));
+        });
+    }
 
     function getDateRangeInString(input) {
         if (input.from && input.to) {
@@ -127,9 +133,8 @@ function Home(props) {
     )
 
     const FeaturedLocationListItem = ({ location }) => (
-        <li className={`p-3 border-bottom recommend__location ${featuredLocation === location && "active"}`} onClick={() => setFeaturedLocation(location)}>{location}</li>
+        <li className={`p-3 border-bottom recommend__location ${featuredLocation === location && "active"}`} onClick={() => onFetchGoodByLocation(location)}>{location}</li>
     );
-
 
     var bannerArr = [];
     var locationArr = [];
@@ -321,7 +326,7 @@ function Home(props) {
                 <h3 className="fw-semibold">Featured homes recommended for you</h3>
 
                 <ul className='d-flex align-items-center justify-content-center recommend__tab'>
-                    <FeaturedLocationListItem location={"Ho Chi Minh"} />
+                    <FeaturedLocationListItem location={"Dong Nai"} />
                     <FeaturedLocationListItem location={"Ha Noi"} />
                     <FeaturedLocationListItem location={"Da Nang"} />
                     <FeaturedLocationListItem location={"Da Lat"} />
@@ -346,11 +351,9 @@ function Home(props) {
 
             <div className="container">
                 <div className="row justify-content-center pb-5">
-                    <RecommendPlaces imgSrc={Home2} name="The Myst Dong Khoi" location="District 8" rating={5} discount={36} price={3639184} />
-                    <RecommendPlaces imgSrc={Home2} name="The Myst Dong Khoi" location="District 8" rating={4} discount={36} price={3639184} />
-                    <RecommendPlaces imgSrc={Home2} name="The Myst Dong Khoi" location="District 8" rating={3} discount={36} price={3639184} />
-                    <RecommendPlaces imgSrc={Home2} name="The Myst Dong Khoi" location="District 8" rating={2} discount={36} price={3639184} />
-                    <RecommendPlaces imgSrc={Home2} name="The Myst Dong Khoi" location="District 8" rating={1} discount={36} price={3639184} />
+                    {discountHotelList.length > 0 && discountHotelList.map((item) => (
+                        <RecommendPlaces imgSrc={item.images[0].image} name={item.name} location={item.place.province} rating={5} discount={item.rooms[0].discount} price={item.rooms[0].price} key={item.id} />
+                    ))}
                 </div>
             </div>
         </>
