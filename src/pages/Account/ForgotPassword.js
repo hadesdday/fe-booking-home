@@ -1,17 +1,19 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect,  useState } from "react";
+import { useParams } from 'react-router';
 import "./resetpassword.css";
-function setPassword() {
-  const [password, setPassword] = useState("");
-  const [confirmPassword,setConfirmPassword] = useState("");
+function ForgotPassword() {
+    let {token} = useParams();
+    console.log(token);
+  const [password, setPassword] = useState('');
+  const [confirmPassword,setConfirmPassword] =  useState('');
   const handleClick=(e)=>{
     e.preventDefault()
-    fetch("http://localhost:8080/user/insert",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify(email)
+    fetch(`http://localhost:8080/user/forgotAccount/${encodeURIComponent(token)}&${encodeURIComponent(password)}&${encodeURIComponent(confirmPassword)}`,{
+      method:"Put",
+      headers:{"Content-Type":"application/json"}
   }).then(()=>{
-    console.log("email is sended");
-    //window.location.href = "/Login";
+    console.log("complete change password");
+    window.location.href = "/Login";
   })
 }
   return (
@@ -32,18 +34,21 @@ function setPassword() {
             <p>or</p>
             <span></span>
           </div>
-          <p>Email</p>
+          <p>Password:</p>
           <input
-            type="text"
-            name="email"
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
+            type="password"
+            name="password"
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
           />
-          <p>
-            Please enter your email in the box above. We will send you a link to
-            access further instructions.
-          </p>
-          <button className="reset_btn">Reset Password</button>
+          <input
+            type="password"
+            name="confirmPassword"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Confirm Password"
+          />
+          
+          <button className="reset_btn" onClick={handleClick}>Change Password</button>
           <p className="back">
             <a href="/Login">back to sign in</a>
           </p>
@@ -62,4 +67,4 @@ function setPassword() {
     </section>
   );
 }
-export default setPassword;
+export default ForgotPassword;

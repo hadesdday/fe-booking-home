@@ -1,16 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./resetpassword.css";
 function ResetPassword() {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const handleClick=(e)=>{
     e.preventDefault()
-    fetch("http://localhost:8080/user/insert",{
+    fetch(`http://localhost:8080/user/resetAccount/${encodeURIComponent(email)}`,{
       method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify(email)
+      headers:{"Content-Type":"application/json"}
   }).then(()=>{
     console.log("email is sended");
-    //window.location.href = "/Login";
+    window.location.href = "/Login";
   })
 }
   return (
@@ -42,7 +41,7 @@ function ResetPassword() {
             Please enter your email in the box above. We will send you a link to
             access further instructions.
           </p>
-          <button className="reset_btn">Reset Password</button>
+          <button className="reset_btn" onClick={handleClick}>Reset Password</button>
           <p className="back">
             <a href="/Login">back to sign in</a>
           </p>
@@ -57,7 +56,7 @@ function ResetPassword() {
             <li>Collect bookings towards your next VIP status</li>
           </ul>
         </div>
-      </div>
+      </div>  
     </section>
   );
 }
