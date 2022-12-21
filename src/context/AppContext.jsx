@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createContext } from 'react';
 
 export const AppContext = createContext();
 
 function AppProvider({ children }) {
-    const [featuredLocation, setFeaturedLocation] = useState("Ho Chi Minh");
+    const [featuredLocation, setFeaturedLocation] = useState("Dong Nai");
 
     const currentDate = new Date();
     const onNextDate = new Date(new Date().setDate(currentDate.getDate() + 1));
