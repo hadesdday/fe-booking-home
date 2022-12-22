@@ -1,6 +1,6 @@
 import DatePicker, { utils } from '@hassanmojab/react-modern-calendar-datepicker';
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { Navigate, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { FreeMode, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -14,16 +14,15 @@ import "./styles.scss";
 
 function HomeDetails(props) {
     const { id } = useParams();
-
     const [shorten, setShorten] = useState(false);
     const [shortenAmenities, setShortenAmenities] = useState(false);
     const [shortenReviews, setShortenReviews] = useState(false);
     const [showContact, setShowContact] = useState(false);
     const [showReport, setShowReport] = useState(false);
 
-    const { selectedDayRange, home, setSelectedDayRange, setHome,
-        showOverlay, setShowOverlay, onChangePeople, setRoomValue, setAdultsValue, setChildValue } = useContext(AppContext);
+    const { selectedDayRange, home, setSelectedDayRange, showOverlay, setShowOverlay, onChangePeople, setAdultsValue, setChildValue } = useContext(AppContext);
 
+    const [isError, setIsError] = useState(false);
     const [hotel, setHotel] = useState({
         images: []
         , info: ""
@@ -43,6 +42,8 @@ function HomeDetails(props) {
                 const { data } = res;
                 console.log(data);
                 setHotel(data);
+            }).catch((err) => {
+                setIsError(true);
             });
             await getReservedDate(id).then((res) => {
                 setReservedDate(res.data);
@@ -216,6 +217,7 @@ function HomeDetails(props) {
 
     return (
         <>
+            {isError === true && <Navigate to="/" exact />}
             <nav className={`navbar navbar-expand-lg position-sticky top-0 bg-white  border-bottom border-dark ${(!showNav || showContact || showReport) ? "" : "z-200"} ${(!showNav) ? "d-none" : ""}`}>
                 <div className="container">
                     <ul className="navbar-nav p-3 mt-0">
@@ -271,23 +273,23 @@ function HomeDetails(props) {
                             </Swiper>
                         </div>
                         <div className="col-md-6">
-                            <img src={images[0]?.image} alt="" className='w-100 rounded-start hide__mobile c-pointer mh-415' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
+                            <img src={images.length > 0 ? images[0]?.image : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"} alt="" className='w-100 rounded-start hide__mobile c-pointer mh-415' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
                         </div>
                         <div className="col-md-6">
                             <div className="row pb-3">
                                 <div className="col-md-6">
-                                    <img src={images[1]?.image} alt="" className='w-100 hide__mobile c-pointer mh-200' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
+                                    <img src={images.length > 0 ? images[1]?.image : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"} alt="" className='w-100 hide__mobile c-pointer mh-200' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
                                 </div>
                                 <div className="col-md-6">
-                                    <img src={images[2]?.image} alt="" className='w-100 rounded-end hide__mobile c-pointer mh-200' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
+                                    <img src={images.length > 0 ? images[2]?.image : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"} alt="" className='w-100 rounded-end hide__mobile c-pointer mh-200' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="col-md-6">
-                                    <img src={images[3]?.image} alt="" className='w-100 hide__mobile c-pointer mh-200' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
+                                    <img src={images.length > 0 ? images[3]?.image : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"} alt="" className='w-100 hide__mobile c-pointer mh-200' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
                                 </div>
                                 <div className="col-md-6">
-                                    <img src={images[4]?.image} alt="" className='w-100 rounded-end hide__mobile c-pointer mh-200' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
+                                    <img src={images.length > 0 ? images[4]?.image : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"} alt="" className='w-100 rounded-end hide__mobile c-pointer mh-200' onClick={() => { setShowOverlay(true); disableScrollbar(); }} />
                                 </div>
                             </div>
                         </div>
@@ -314,8 +316,8 @@ function HomeDetails(props) {
                                 <div className="row">
                                     <div className="col-1"><i className='bx bx-like fs-180'></i></div>
                                     <div className="col-11">
-                                        <p className="fw-semibold m-0">Great for remote work</p>
-                                        <p>Fast wifi at 94 Mbps, plus a dedicated workspace in a private room.</p>
+                                        <p className="fw-semibold m-0">Great location</p>
+                                        <p>90% of recent guests gave the location a 5-star rating.</p>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -346,7 +348,7 @@ function HomeDetails(props) {
                             <div className="border-bottom w-95 p-2"></div>
                             <div className="row mt-4 p-3" id='amenities'>
                                 <h3 className='fw-semibold mb-4'>What this place offers</h3>
-                                {amenities && amenities.slice(0, 10).map((item, index) => (
+                                {amenities.length > 0 ? amenities.slice(0, 10).map((item, index) => (
                                     <div className="col-6" key={index}>
                                         <div className="row">
                                             <div className="col-1"><i className='bx bx-like fs-180'></i></div>
@@ -355,7 +357,7 @@ function HomeDetails(props) {
                                             </div>
                                         </div>
                                     </div>
-                                ))}
+                                )) : <p>Oops not found anything here</p>}
                                 {
                                     (amenities && shortenAmenities) && amenities.slice(10, amenities.length).map((item, index) => (
                                         <div className="col-6" key={index}>
@@ -394,7 +396,7 @@ function HomeDetails(props) {
                                 <div className="col-6 text-end">
                                     <p>
                                         <i className='bx bxs-star'></i> <span className='mr-15'>{avgRating}</span>
-                                        <a href="#review" className='text-decoration-underline text-muted'> {reviews.length} reviews</a>
+                                        <a href="#review" className='text-decoration-underline text-muted'> {reviews.length > 0 ? reviews.length : 0} reviews</a>
                                     </p>
                                 </div>
                             </div>
@@ -551,7 +553,7 @@ function HomeDetails(props) {
                         <div className="row mt-4">
                             <div className="row">
                                 <div className="col-1">
-                                    <img src={Pic1} alt="" className="rounded-circle avatar" />
+                                    <img src={"https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="} alt="" className="rounded-circle avatar" />
                                 </div>
                                 <div className="col-11">
                                     <p className="fw-semibold">Hosted By {owner.name}</p>
@@ -716,11 +718,13 @@ function HomeDetails(props) {
                     </Swiper>
                 </div>
             </div>
-            <div className="text-end">
-                <div className="btn">
-                    <button className='btn__show__all fw-semibold z-2' type="button" onClick={() => { setShowOverlay(true); disableScrollbar(); }}><i className='bx bxs-grid'></i> Show all photos</button>
+            {images.length > 0 &&
+                <div className="text-end">
+                    <div className="btn">
+                        <button className='btn__show__all fw-semibold z-2' type="button" onClick={() => { setShowOverlay(true); disableScrollbar(); }}><i className='bx bxs-grid'></i> Show all photos</button>
+                    </div>
                 </div>
-            </div>
+            }
         </>
     );
 }

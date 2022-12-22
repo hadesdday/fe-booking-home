@@ -40,3 +40,25 @@ export const getReservedDate = (hotelId) => {
     `${API_ENDPOINT}/${HOTEL.FETCH_RESERVED_DATE}/${hotelId}`
   );
 };
+
+export const getBookingHistoryByEmail = (email) => {
+  return axiosService.get(
+    `${API_ENDPOINT}/${HOTEL.FETCH_BOOKING_HISTORY_EMAIL}/${email}`
+  );
+};
+
+export const getBookingHistoryByUsername = (username) => {
+  return axiosService.get(
+    `${API_ENDPOINT}/${HOTEL.FETCH_BOOKING_HISTORY_USERNAME}/${username}`
+  );
+};
+
+export const getHotelListDiscount = () => {
+  return axiosService.get(`${API_ENDPOINT}/${HOTEL.FETCH_HOTEL_LIST_DISCOUNT}`);
+};
+
+export const getHotelGoodByLocation = (location) => {
+  return axiosService.get(
+    `${API_ENDPOINT}/${HOTEL.FETCH_HOTEL_GOOD_BY_LOCATION}/${location}`
+  );
+};

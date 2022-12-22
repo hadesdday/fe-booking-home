@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import "./styles.scss";
 
 function RecommendPlaces(props) {
-    const { imgSrc, name, location, rating, discount, price } = props;
+    const { imgSrc, name, location, rating, discount, price, id } = props;
 
     const formatter = new Intl.NumberFormat('vi-VN', {
         style: 'currency',
@@ -17,7 +18,7 @@ function RecommendPlaces(props) {
     var afterDiscountPrice = price - ((price * discount) / 100);
 
     return (
-        <a href="" className="col-md-2 col-sm-12 m-1 p-1">
+        <Link to={`home/details/${id}`} className="col-md-2 col-sm-12 m-1 p-1">
             <div className="card">
                 <img src={imgSrc} className="card-img-top" alt="404" />
                 <div className="card-body">
@@ -35,7 +36,7 @@ function RecommendPlaces(props) {
                     </div>
                 </div>
             </div>
-        </a>
+        </Link>
     );
 }
 

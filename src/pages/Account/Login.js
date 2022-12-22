@@ -96,41 +96,29 @@ theme="light"
                 </button>
                 <div className="signup_other">
                 <button className="facebook_btn">
-                <img src="https://cdn6.agoda.net/images/universal-login/facebook-logo.svg"></img>
-                    FaceBook
+                  <img src="https://cdn6.agoda.net/images/universal-login/facebook-logo.svg"></img>
+                  FaceBook
                 </button>
                 <button className="apple_btn">
-                <img src="https://cdn6.agoda.net/images/universal-login/apple-logo.svg"></img>
-                    Apple
+                  <img src="https://cdn6.agoda.net/images/universal-login/apple-logo.svg"></img>
+                  Apple
                 </button>
-                </div>
-                
-                
-
+              </div>
             </form>
-            </div>
-            <div className="container_right">
-                <img src="https://cdn0.agoda.net/images/agodavip/signupcage.svg"></img>
-                <h3>Sign in to to unlock more benefits!</h3>
-                <ul>
-                    <li>
-                    Best Price Guarantee on bookings
-                    </li>
-                    <li>
-                    Access our best Insider and VIP deals
-                    </li>
-                    <li>
-                    Earn AgodaCash to save even more
-                    </li>
-                    <li>
-                    Collect bookings towards your next VIP status
-                    </li>
-                </ul>
-            </div>
-            </div>
-        </section>
+          </div>
+          <div className="container_right">
+            <img src="https://cdn0.agoda.net/images/agodavip/signupcage.svg"></img>
+            <h3>Sign in to to unlock more benefits!</h3>
+            <ul>
+              <li>Best Price Guarantee on bookings</li>
+              <li>Access our best Insider and VIP deals</li>
+              <li>Earn AgodaCash to save even more</li>
+              <li>Collect bookings towards your next VIP status</li>
+            </ul>
+          </div>
+        </div>
+      </section>
     </>
-    )
-
+  );
 }
-export default Login
+export default Login;

@@ -10,8 +10,9 @@ import MasterIcon from "../../assets/icon/ic_master.png";
 import $ from "jquery";
 import "./styles.scss";
 import { toastError, toastSuccess } from '../../services/ToastService';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { bookHotel } from '../../api/hotel.api';
+import { cp, createPayment, dm, proccessToPayment } from '../../api/paypal.api';
 
 function Payment(props) {
     const { selectedDayRange, home, country, setCountry } = useContext(AppContext);
@@ -19,6 +20,7 @@ function Payment(props) {
     const countryObject = COUNTRY_LIST.find(a => a.value === country);
     const night = getNightNumber(selectedDayRange);
     const chosenItems = JSON.parse(sessionStorage.getItem("chosenItem"));
+    const navigate = useNavigate();
 
     function getDateInObject(date) {
         const re = {
@@ -75,22 +77,14 @@ function Payment(props) {
     function onPayBooking() {
         const customer = JSON.parse(sessionStorage.getItem("customer"));
         const sessionId = sessionStorage.getItem("sessionId");
-        chosenItems.map((item) => {
-            const data = {
-                customer: customer,
-                hotel: item.hotel,
-                room: item.hotel.rooms[0],
-                dateCheckin: new Date(item.from),
-                dateCheckout: new Date(item.to),
-                voucherId: 0,
-                status: Number($("input[name='payment__status']").val())
-            };
-            console.log("final data", data);
-            bookHotel(data).then((res) => {
-                console.log("book hotel response", res);
-                if (res.status === 200) {
-                    toastSuccess("Book hotel successfully");
-                }
+        createPayment().then((res) => {
+            const { access_token } = res.data;
+            localStorage.setItem("access__token", access_token);
+            var token = localStorage.getItem("access__token");
+            proccessToPayment(token, chosenItems, total).then((res) => {
+                const { links, id } = res.data;
+                localStorage.setItem("paymentId", id);
+                window.location.href = links[1].href;
             })
         })
     }
@@ -131,7 +125,7 @@ function Payment(props) {
                             <div className="row m-1 mt-3">
                                 <p className='p-0 mb-1'>Select payment method <span className='text-danger'>*</span></p>
                                 <select className="form-select" aria-label="Choose payment method">
-                                    <option value="vnpay" defaultChecked>VNPAY</option>
+                                    <option value="Paypal" defaultChecked>Paypal</option>
                                 </select>
                             </div>
                             <div className="row justify-content-end m-2">
