@@ -1,17 +1,21 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect,  useState } from "react";
+import { useParams } from 'react-router';
 import "./resetpassword.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-function ResetPassword() {
-  const [email, setEmail] = useState('');
+function ForgotPassword() {
+    let {token} = useParams();
+    console.log(token);
+  const [password, setPassword] = useState('');
+  const [confirmPassword,setConfirmPassword] =  useState('');
   const handleClick=(e)=>{
     e.preventDefault()
-    fetch(`http://localhost:8080/user/resetAccount/${encodeURIComponent(email)}`,{
-      method:"POST",
+    fetch(`http://localhost:8080/user/forgotAccount/${encodeURIComponent(token)}&${encodeURIComponent(password)}&${encodeURIComponent(confirmPassword)}`,{
+      method:"Put",
       headers:{"Content-Type":"application/json"}
   }).then(()=>{
-    console.log("email is sended");
-    toast.success('email is sended', {
+    console.log("complete change password");
+    toast.success('complete change password', {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -22,17 +26,17 @@ function ResetPassword() {
       theme: "dark",
       });
     window.location.href = "/Login";
-  }).catch(error=>{
-    toast('Gmai is wrong'+error, {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-      });
+  }).catch(error => {
+    toast('Register Failure:infomation wrong', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
   })
 }
   return (
@@ -65,18 +69,21 @@ theme="dark"
             <p>or</p>
             <span></span>
           </div>
-          <p>Email</p>
+          <p>Password:</p>
           <input
-            type="text"
-            name="email"
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
+            type="password"
+            name="password"
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
           />
-          <p>
-            Please enter your email in the box above. We will send you a link to
-            access further instructions.
-          </p>
-          <button className="reset_btn" onClick={handleClick}>Reset Password</button>
+          <input
+            type="password"
+            name="confirmPassword"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Confirm Password"
+          />
+          
+          <button className="reset_btn" onClick={handleClick}>Change Password</button>
           <p className="back">
             <a href="/Login">back to sign in</a>
           </p>
@@ -91,8 +98,8 @@ theme="dark"
             <li>Collect bookings towards your next VIP status</li>
           </ul>
         </div>
-      </div>  
+      </div>
     </section>
   );
 }
-export default ResetPassword;
+export default ForgotPassword;

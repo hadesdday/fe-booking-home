@@ -1,7 +1,8 @@
 import { Button } from "bootstrap";
 import React, { useEffect, useRef, useState } from "react";
 import "./register.css"
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function Register () {
     const [username,setUserName] = useState('');
     const [email,setEmail] = useState('');
@@ -20,7 +21,28 @@ function Register () {
     
       }).then(()=>{
         console.log("New user added");
+        toast.success('user is added wellcome:'+username, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
         window.location.href = "/Login";
+      }).catch(error => {
+        toast('Register Failure:infomation wrong', {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
       })
     }
     /*useEffect(()=>{
@@ -35,6 +57,18 @@ function Register () {
     return (
         
         <section>
+            <ToastContainer
+position="top-center"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="dark"
+/>
             <div className="container">
             {/*<p ref={errRef} className={errMsg ? "errMsg":"offScreen"} aria-live="assertive">{errMsg}</p>*/}
             <div className="container_left">
@@ -46,11 +80,11 @@ function Register () {
                 <input type="text" name="email" placeholder="Email" onChange={(e)=>setEmail(e.target.value)}/>
                 <p>Password</p>
                 <input type="text" placeholder="setPassword" onChange={(e)=>setPassword(e.target.value)}/>
-                <p>Password</p>
+                <p>Name</p>
                 <input type="text" placeholder="Name" onChange={(e)=>setName(e.target.value)}/>
-                <p>Password</p>
+                <p>Country</p>
                 <input type="text" placeholder="Country" onChange={(e)=>setCountry(e.target.value)}/>
-                <p>Password</p>
+                <p>Phone</p>
                 <input type="text" placeholder="Phone" onChange={(e)=>setPhone(e.target.value)}/>
                 <div className="check_policy">
                     <p>

@@ -10,6 +10,8 @@ import ListingHome from "./pages/Listing/ListingHome";
 import ResetPassword from "./pages/Account/ResetPassword";
 import Profile from "./pages/Listing/Profile";
 import ListingDetails from "./pages/Listing/ListingDetails";
+import Active from "./pages/Account/Active";
+import ForgotPassword from "./pages/Account/ForgotPassword";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Home from "./pages/Home";
@@ -58,6 +60,8 @@ function App() {
             <Route exact path="/" element={<Home />} />
             <Route path="Login" element={<Login />} />
             <Route path="Register" element={<Register />} />
+            <Route path="Active/:token" element={<Active/>}/>
+            <Route path="ForgotPassword/:token" element={<ForgotPassword/>}/>           
             <Route path="ResetPassword" element={<ResetPassword />} />
             <Route path="Overview" element={<Overview />} />
             <Route path="Profile" element={<Profile />} />
