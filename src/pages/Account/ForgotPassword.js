@@ -1,6 +1,8 @@
 import React, { useEffect,  useState } from "react";
 import { useParams } from 'react-router';
 import "./resetpassword.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function ForgotPassword() {
     let {token} = useParams();
     console.log(token);
@@ -13,11 +15,44 @@ function ForgotPassword() {
       headers:{"Content-Type":"application/json"}
   }).then(()=>{
     console.log("complete change password");
+    toast.success('complete change password', {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      });
     window.location.href = "/Login";
+  }).catch(error => {
+    toast('Register Failure:infomation wrong', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
   })
 }
   return (
     <section>
+      <ToastContainer
+position="top-center"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="dark"
+/>
       <div className="container">
         <div className="container_left">
           <h3>Forgot Password</h3>

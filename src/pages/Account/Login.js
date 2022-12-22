@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom/client";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./login.css";
 
 function Login(){
@@ -17,9 +19,31 @@ function Login(){
           console.log(result);
           const json = JSON.stringify(result);
           localStorage.setItem("userData",json);
-          window.location.href = "/";
-        }
-      ) 
+
+            toast.success('Login success', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+            window.location.href = "/";
+         }
+      ).catch(error => {
+        toast('Login Failure:username or password wrong', {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
+      })
     }
     /*
     useEffect(() => {
@@ -32,7 +56,20 @@ function Login(){
     */
     return (
     <>
+    <ToastContainer
+position="top-center"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+/>
         <section>
+            
             <div className="container">
             {/*<p ref={errRef} className={errMsg ? "errMsg":"offScreen"} aria-live="assertive">{errMsg}</p>*/}
             <div className="container_left">
@@ -42,7 +79,7 @@ function Login(){
                 <input type="text"  placeholder="User Name" onChange={(e)=>setUserName(e.target.value)}/>
                 <p>Password</p>
                 <input type="current-password"  placeholder="Password" onChange={(e)=>setPassword(e.target.value)}/>
-                
+                <p>please active accout before login</p>
                 <button className="login_btn" onClick={handleClick}>Sign In</button>
                 <div className="link">
                     <a href="/Register">create account</a>
